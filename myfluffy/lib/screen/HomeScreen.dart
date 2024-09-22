@@ -1,0 +1,92 @@
+import 'package:flutter/material.dart';
+import 'package:myfluffy/section/AboutUsSection.dart';
+import 'package:myfluffy/section/AdsSection.dart';
+import 'package:myfluffy/section/CharitySection.dart';
+import 'package:myfluffy/section/ForumViewSection.dart';
+import 'package:myfluffy/section/NearMeSection.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
+      appBar: AppBar(
+        title: const Text('Home'),
+        backgroundColor: const Color(0xFFFFFFFF),
+      ),
+      endDrawer: Drawer(
+        backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
+        width: 200,
+        child: Padding(
+          padding: const EdgeInsets.only(left:15.0),
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(child: Image.asset(
+              'lib/assets/cat.png',
+              alignment: Alignment.center,
+              width: 60,
+              height: 60,
+              ),
+            ),
+              SizedBox(height: 30),
+              ListTile(
+                leading: const Icon(Icons.person),
+                title: const Text('Profile'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.post_add),
+                title: const Text('Post'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.search),
+                title: const Text('Find'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.notifications),
+                title: const Text('News'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.settings),
+                title: const Text('Settings'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+      body: const Center(
+        child: Column(
+          children: [
+            Aboutussection(),
+            ForumViewSection(),
+            NearMeSection(),
+            CharitySection(),
+            Adssection()
+          ],
+        ),
+      ),
+    );
+  }
+}
