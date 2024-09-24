@@ -25,18 +25,19 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
         width: 200,
         child: Padding(
-          padding: const EdgeInsets.only(left:15.0),
+          padding: const EdgeInsets.only(left: 15.0),
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              DrawerHeader(child: Image.asset(
-              'lib/assets/cat.png',
-              alignment: Alignment.center,
-              width: 60,
-              height: 60,
+              DrawerHeader(
+                child: Image.asset(
+                  'lib/assets/cat.png',
+                  alignment: Alignment.center,
+                  width: 60,
+                  height: 60,
+                ),
               ),
-            ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               ListTile(
                 leading: const Icon(Icons.person),
                 title: const Text('Profile'),
@@ -76,16 +77,15 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      body: const Center(
-        child: Column(
-          children: [
-            Aboutussection(),
-            ForumViewSection(),
-            NearMeSection(),
-            CharitySection(),
-            Adssection()
-          ],
-        ),
+      body: ListView(
+        padding: const EdgeInsets.all(8.0),
+        children: const [
+          Aboutussection(),
+          ForumViewSection(),
+          NearMeSection(),
+          CharitySection(),
+          Adssection(),
+        ],
       ),
     );
   }
