@@ -4,6 +4,7 @@ import 'package:myfluffy/section/AdsSection.dart';
 import 'package:myfluffy/section/CharitySection.dart';
 import 'package:myfluffy/section/ForumViewSection.dart';
 import 'package:myfluffy/section/NearMeSection.dart';
+import 'package:myfluffy/screen/PostPage.dart'; // Import your new PostPage
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -49,7 +50,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 leading: const Icon(Icons.post_add),
                 title: const Text('Post'),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const PostPage()),
+                  );
                 },
               ),
               ListTile(
