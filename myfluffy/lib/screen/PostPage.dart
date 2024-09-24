@@ -29,13 +29,12 @@ class _PostPageState extends State<PostPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Post'),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.yellow[300],
         foregroundColor: Colors.black,
         actions: [
           IconButton(
             icon: const Icon(Icons.menu),
             onPressed: () {
-              // Menu icon action
             },
           ),
         ],

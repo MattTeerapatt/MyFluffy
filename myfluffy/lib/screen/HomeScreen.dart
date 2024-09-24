@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myfluffy/screen/FindPage.dart';
 import 'package:myfluffy/section/AboutUsSection.dart';
 import 'package:myfluffy/section/AdsSection.dart';
 import 'package:myfluffy/section/CharitySection.dart';
@@ -6,6 +7,7 @@ import 'package:myfluffy/section/ForumViewSection.dart';
 import 'package:myfluffy/section/NearMeSection.dart';
 import 'package:myfluffy/screen/PostPage.dart';
 import 'package:myfluffy/screen/ProfilePage.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -66,9 +68,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 leading: const Icon(Icons.search),
                 title: const Text('Find'),
                 onTap: () {
-                  Navigator.pop(context);
+                  // Navigator.pop(context);  /
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const FindPage()),
+                  );
                 },
               ),
+
               ListTile(
                 leading: const Icon(Icons.notifications),
                 title: const Text('News'),

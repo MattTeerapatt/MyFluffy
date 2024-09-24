@@ -20,7 +20,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('$name\'s Profile'),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.yellow[300],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -159,23 +159,6 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         );
       },
-    );
-  }
-}
-
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
-        backgroundColor: Colors.blue,
-      ),
-      body: const Center(
-        child: Text('Settings Page Content'),
-      ),
     );
   }
 }
