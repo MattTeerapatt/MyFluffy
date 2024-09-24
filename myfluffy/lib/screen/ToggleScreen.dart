@@ -3,7 +3,7 @@ import 'package:myfluffy/screen/ForumScreen.dart';
 import 'package:myfluffy/screen/HomeScreen.dart';
 import 'package:myfluffy/screen/LandingScreen.dart';
 import 'package:myfluffy/screen/SettingScreen.dart';
-import 'package:myfluffy/section/%E0%B8%BABottomNavBar.dart';
+import 'package:myfluffy/section/BottomNavBar.dart';
 
 class Togglescreen extends StatefulWidget {
   const Togglescreen({super.key});
