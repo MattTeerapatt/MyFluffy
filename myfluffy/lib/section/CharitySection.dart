@@ -17,8 +17,8 @@ class _CharitySectionState extends State<CharitySection> {
   void initState() {
     super.initState();
 
-    // Start the timer to change the page every 5 seconds
-    _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
+    // Start the timer to change the page every 7 seconds
+    _timer = Timer.periodic(const Duration(seconds: 7), (Timer timer) {
       if (_currentPage < 5) {
         _currentPage++;
       } else {
@@ -83,3 +83,4 @@ void main() {
     ),
   ));
 }
+

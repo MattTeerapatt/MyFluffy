@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ForumViewSection(),
           NearMeSection(),
           CharitySection(),
-          Adssection(),
+          AdsSection(),
         ],
       ),
     );
