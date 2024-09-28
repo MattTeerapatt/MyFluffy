@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myfluffy/screen/HomeScreen.dart';
 import 'package:myfluffy/screen/ToggleScreen.dart';
 
 class LandingScreen extends StatefulWidget {

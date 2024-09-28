@@ -76,10 +76,5 @@ class _ForumViewSectionState extends State<ForumViewSection> {
   }
 }
 
-void main() {
-  runApp(const MaterialApp(
-    home: Scaffold(
-      body: ForumViewSection(),
-    ),
-  ));
-}
+
+

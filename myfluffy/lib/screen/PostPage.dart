@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import 'package:myfluffy/utility/TextInputField.dart';
+
 class PostPage extends StatefulWidget {
   const PostPage({super.key});
 
@@ -83,11 +85,11 @@ class _PostPageState extends State<PostPage> {
               ),
             ),
             const SizedBox(height: 20),
-            buildTextInputField('Name', 'John Doe'),
+            TextInputField(label:'Name', value: 'John Doe'),
             const SizedBox(height: 20),
-            buildTextInputField('Description', 'Contact'),
+            TextInputField(label: 'Description',value:  'Contact'),
             const SizedBox(height: 20),
-            buildTextInputField('Reward', '\$99'),
+            TextInputField(label: 'Reward', value: '\$99'),
             const SizedBox(height: 30),
             Center(
               child: ElevatedButton(
@@ -120,34 +122,7 @@ class _PostPageState extends State<PostPage> {
     );
   }
 
-  Widget buildTextInputField(String label, String value) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 5),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: TextFormField(
-            initialValue: value,
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+ 
 
   // Show a dialog to pick from camera or gallery
   void _showImagePickerDialog(BuildContext context) {

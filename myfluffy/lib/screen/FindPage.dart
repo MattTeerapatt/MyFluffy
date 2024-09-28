@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myfluffy/model/CatTile.dart';
 import 'package:myfluffy/screen/CatDetailPage.dart';
 
 class FindPage extends StatefulWidget {
@@ -127,7 +128,7 @@ class _FindPageState extends State<FindPage> {
                                 ),
                               );
                             },
-                            child: buildCatTile(catsInZone[index]),
+                            child: CatTile(catName: catsInZone[index]),
                           );
                         },
                       ),
@@ -143,24 +144,5 @@ class _FindPageState extends State<FindPage> {
     );
   }
 
-  Widget buildCatTile(String catName) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.pets, size: 40, color: Color.fromARGB(255, 79, 71, 6)),
-          const SizedBox(height: 10),
-          Text(
-            catName,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
 }

@@ -163,8 +163,4 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
-void main() {
-  runApp(const MaterialApp(
-    home: ProfilePage(),
-  ));
-}
+

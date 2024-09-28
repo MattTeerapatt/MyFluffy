@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:myfluffy/model/CharityTile.dart';
 
 class CharitySection extends StatefulWidget {
   const CharitySection({Key? key}) : super(key: key);
@@ -49,38 +50,13 @@ class _CharitySectionState extends State<CharitySection> {
         controller: _pageController,
         scrollDirection: Axis.horizontal,
         children: <Widget>[
-          _buildCharityTile('Charity Section'),
-          _buildCharityTile('Charity 1'),
-          _buildCharityTile('Charity 2'),
-          _buildCharityTile('Charity 3'),
-          _buildCharityTile('Charity 4'),
-          _buildCharityTile('Charity 5'),
+          Charitytile(title: 'Charity Section'),
+          Charitytile(title: 'Charity Section'),
+          Charitytile(title: 'Charity Section'),
+          Charitytile(title: 'Charity Section'),
+          Charitytile(title: 'Charity Section'),
         ],
       ),
     );
   }
-
-  // Helper method to create charity tiles
-  Widget _buildCharityTile(String title) {
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      width: 150, // Adjust width
-      child: Card(
-        child: Center(
-          child: ListTile(
-            title: Text(title),
-          ),
-        ),
-      ),
-    );
-  }
 }
-
-void main() {
-  runApp(const MaterialApp(
-    home: Scaffold(
-      body: CharitySection(),
-    ),
-  ));
-}
-

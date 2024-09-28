@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myfluffy/screen/ForumScreen.dart';
 import 'package:myfluffy/screen/HomeScreen.dart';
-import 'package:myfluffy/screen/LandingScreen.dart';
 import 'package:myfluffy/screen/SettingScreen.dart';
 import 'package:myfluffy/section/BottomNavBar.dart';
 
