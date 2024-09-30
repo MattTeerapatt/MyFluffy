@@ -42,13 +42,14 @@ class _PostPageState extends State<PostPage> {
           ),
         ],
       ),
-      body: Padding(
+      body: SingleChildScrollView(
+      child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 20,
+              height: 5,
             ),
             const Text(
               'Photo',
@@ -131,6 +132,7 @@ class _PostPageState extends State<PostPage> {
             ),
           ],
         ),
+      ),
       ),
     );
   }
