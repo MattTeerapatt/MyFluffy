@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:myfluffy/model/ForumPreviewTile.dart';
 
 class ForumViewSection extends StatefulWidget {
   const ForumViewSection({Key? key}) : super(key: key);
@@ -43,37 +44,23 @@ class _ForumViewSectionState extends State<ForumViewSection> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 150,
+  return SizedBox(
+    height: 150,
+    child: Container(
+      color: Colors.white, // Set the background color to white
       child: PageView(
         controller: _pageController,
         scrollDirection: Axis.horizontal,
         children: <Widget>[
-          _buildForumViewTile('ForumView Section'),
-          _buildForumViewTile('ForumView 1'),
-          _buildForumViewTile('ForumView 2'),
-          _buildForumViewTile('ForumView 3'),
-          _buildForumViewTile('ForumView 4'),
-          _buildForumViewTile('ForumView 5'),
+          Forumpreviewtile(title: 'Diddy', image: Image(image: AssetImage('lib/assets/kitty1.jpeg'), width: 150, height: 150)),
+          Forumpreviewtile(title: 'Johnson', image: Image(image: AssetImage('lib/assets/kitty2.jpg'), width: 150, height: 150)),
         ],
       ),
-    );
+    ),
+  );
   }
 
-  // Helper method to create ForumView tiles
-  Widget _buildForumViewTile(String title) {
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      width: 150, // Adjust width
-      child: Card(
-        child: Center(
-          child: ListTile(
-            title: Text(title),
-          ),
-        ),
-      ),
-    );
-  }
+ 
 }
 
 

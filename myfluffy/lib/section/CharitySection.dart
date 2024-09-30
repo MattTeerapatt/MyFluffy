@@ -50,11 +50,14 @@ class _CharitySectionState extends State<CharitySection> {
         controller: _pageController,
         scrollDirection: Axis.horizontal,
         children: <Widget>[
-          Charitytile(title: 'Charity Section'),
-          Charitytile(title: 'Charity Section'),
-          Charitytile(title: 'Charity Section'),
-          Charitytile(title: 'Charity Section'),
-          Charitytile(title: 'Charity Section'),
+          Charitytile(imagePath: 'lib/assets/charity.jpg'),
+          Charitytile(imagePath: 'lib/assets/charity.jpg'),
+          Charitytile(imagePath: 'lib/assets/charity.jpg'),
+          Charitytile(imagePath: 'lib/assets/charity.jpg'),
+          Charitytile(imagePath: 'lib/assets/charity.jpg'),
+          Charitytile(imagePath: 'lib/assets/charity.jpg'),
+
+
         ],
       ),
     );

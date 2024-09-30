@@ -29,6 +29,7 @@ class _PostPageState extends State<PostPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Post'),
         backgroundColor: Colors.yellow[300],
@@ -46,6 +47,9 @@ class _PostPageState extends State<PostPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(
+              height: 20,
+            ),
             const Text(
               'Photo',
               style: TextStyle(
@@ -84,13 +88,22 @@ class _PostPageState extends State<PostPage> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-            TextInputField(label:'Name', value: 'John Doe'),
-            const SizedBox(height: 20),
-            TextInputField(label: 'Description',value:  'Contact'),
-            const SizedBox(height: 20),
-            TextInputField(label: 'Reward', value: '\$99'),
-            const SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                children: [
+                  SizedBox(height: 24),
+                  TextInputField(label:'Name', value: ' ', placeholder: 'Enter name'),
+                  SizedBox(height: 24),
+                  TextInputField(label: 'Description',value:  ' ', placeholder: 'Enter description'),
+                  SizedBox(height: 24),
+                  TextInputField(label: 'Location',value:  ' ', placeholder: 'Enter location'),
+                  SizedBox(height: 24),
+                  TextInputField(label: 'Reward', value: '', placeholder: 'Enter reward'),
+                  SizedBox(height: 24),
+                ],
+              ),
+              ),
             Center(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(

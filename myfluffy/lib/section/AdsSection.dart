@@ -58,7 +58,7 @@ class _AdsSectionState extends State<AdsSection> {
         scrollDirection: Axis.horizontal,
         children: List.generate(
           numAds,
-          (index) => AdsTile(text: 'Ads $index'), // Use AdsTile here
+          (index) =>           AdsTile(imagePath: 'lib/assets/charity.jpg'),
         ),
       ),
     );

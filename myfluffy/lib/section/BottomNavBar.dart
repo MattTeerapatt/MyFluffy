@@ -9,9 +9,10 @@ class MyBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      height: 80,
+      padding: const EdgeInsets.symmetric(vertical: 2),
       decoration: BoxDecoration(
-        color: Colors.yellow[300],
+        color: Colors.white,
         boxShadow: [
           BoxShadow(
             blurRadius: 20,
@@ -32,8 +33,8 @@ class MyBottomNavBar extends StatelessWidget {
             text: 'Home',
           ),
           GButton(
-            icon: Icons.search,
-            text: 'Forum',
+            icon: Icons.play_circle,
+            text: 'Reel',
           ),
           GButton(
             icon: Icons.settings,

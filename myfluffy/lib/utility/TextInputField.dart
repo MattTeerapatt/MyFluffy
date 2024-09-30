@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class TextInputField extends StatelessWidget {
   final String label;
   final String value;
+  final String placeholder; // Add a placeholder property
 
   const TextInputField({
     Key? key,
     required this.label,
     required this.value,
+    required this.placeholder, // Add a placeholder parameter
   }) : super(key: key);
 
   @override
@@ -26,13 +28,17 @@ class TextInputField extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
-            color: Colors.grey[200],
+            color: const Color.fromARGB(255, 255, 255, 255),
             borderRadius: BorderRadius.circular(12),
           ),
           child: TextFormField(
             initialValue: value,
-            decoration: const InputDecoration(
-              border: InputBorder.none,
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+              hintText: placeholder, // Add the placeholder text
             ),
           ),
         ),

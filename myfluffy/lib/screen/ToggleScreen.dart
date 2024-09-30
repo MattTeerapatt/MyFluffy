@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myfluffy/screen/ForumScreen.dart';
+import 'package:myfluffy/screen/ReelPage.dart';
 import 'package:myfluffy/screen/HomeScreen.dart';
 import 'package:myfluffy/screen/SettingScreen.dart';
 import 'package:myfluffy/section/BottomNavBar.dart';
@@ -23,7 +23,7 @@ class _TogglescreenState extends State<Togglescreen> {
   final List<Widget> _pages = [
 
     const HomeScreen(),
-    const Forumscreen(),
+    const ReelPage(),
     const Settingscreen(),
   ];
 

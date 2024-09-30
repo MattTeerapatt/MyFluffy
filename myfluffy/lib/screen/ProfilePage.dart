@@ -8,8 +8,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String name = 'Johnny Nigga'; 
-  String email = 'nigga56@example.com'; 
+  String name = 'Johnny NiK Kah'; 
+  String email = 'JohnDoe@example.com'; 
   String location = 'Bangkok, Thailand';
   String birthday = 'January 1, 9999';
   String phone = '+66 123 456 789';
@@ -18,6 +18,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('$name\'s Profile'),
         backgroundColor: Colors.yellow[300],
