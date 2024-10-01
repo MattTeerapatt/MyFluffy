@@ -8,7 +8,6 @@ import 'package:myfluffy/section/NearMeSection.dart';
 import 'package:myfluffy/screen/PostPage.dart';
 import 'package:myfluffy/screen/ProfilePage.dart';
 
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -20,13 +19,23 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
+      backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
-        title: const Text('Home'),
-        backgroundColor: const Color(0xFFFFFFFF),
+        backgroundColor: Colors.white,
+        leadingWidth: 120,
+        leading: Padding(
+          padding: const EdgeInsets.only(top: 10, left: 10),
+          child: const Text(
+            'MyFluffy',
+            style: TextStyle(
+                color: Color(0xFF330295),
+                fontWeight: FontWeight.bold,
+                fontSize: 24),
+          ),
+        ),
       ),
       endDrawer: Drawer(
-        backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
+        backgroundColor: const Color(0xFFFFFFFF),
         width: 200,
         child: Padding(
           padding: const EdgeInsets.only(left: 15.0),
@@ -39,12 +48,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   alignment: Alignment.center,
                   width: 60,
                   height: 60,
+                  color: Color(0xFF330295),
                 ),
               ),
               const SizedBox(height: 30),
               ListTile(
-                leading: const Icon(Icons.person),
-                title: const Text('Profile'),
+                leading: const Icon(Icons.person, color: Color(0xFF330295)),
+                title: const Text(
+                  'Profile',
+                  style: TextStyle(color: Color(0xFF330295)),
+                ),
                 onTap: () {
                   // Navigator.pop(context);
                   Navigator.push(
@@ -55,8 +68,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.post_add),
-                title: const Text('Post'),
+                leading: const Icon(Icons.post_add, color: Color(0xFF330295)),
+                title: const Text(
+                  'Post',
+                  style: TextStyle(color: Color(0xFF330295)),
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -65,8 +81,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.search),
-                title: const Text('Find'),
+                leading: const Icon(Icons.search, color: Color(0xFF330295)),
+                title: const Text(
+                  'Find',
+                  style: TextStyle(color: Color(0xFF330295)),
+                ),
                 onTap: () {
                   // Navigator.pop(context);  /
                   Navigator.push(
@@ -75,17 +94,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
-
               ListTile(
-                leading: const Icon(Icons.notifications),
-                title: const Text('News'),
+                leading:
+                    const Icon(Icons.notifications, color: Color(0xFF330295)),
+                title: const Text(
+                  'News',
+                  style: TextStyle(color: Color(0xFF330295)),
+                ),
                 onTap: () {
                   Navigator.pop(context);
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.settings),
-                title: const Text('Settings'),
+                leading: const Icon(Icons.settings, color: Color(0xFF330295)),
+                title: const Text(
+                  'Settings',
+                  style: TextStyle(color: Color(0xFF330295)),
+                ),
                 onTap: () {
                   Navigator.pop(context);
                 },
@@ -97,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: ListView(
         padding: const EdgeInsets.all(8.0),
         children: const [
-          Aboutussection(),
+          // Aboutussection(),
           ForumViewSection(),
           NearMeSection(),
           CharitySection(),

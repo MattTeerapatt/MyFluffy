@@ -10,9 +10,9 @@ class MyBottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 80,
-      padding: const EdgeInsets.symmetric(vertical: 2),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color(0xFF330295),
         boxShadow: [
           BoxShadow(
             blurRadius: 20,
@@ -22,7 +22,7 @@ class MyBottomNavBar extends StatelessWidget {
       ),
       child: GNav(
         color: Colors.grey[400],
-        activeColor: Colors.black,
+        activeColor:Color(0xFF330295),
         tabBackgroundColor: Colors.grey.shade100,
         mainAxisAlignment: MainAxisAlignment.center,
         tabBorderRadius: 16,
@@ -31,6 +31,7 @@ class MyBottomNavBar extends StatelessWidget {
           GButton(
             icon: Icons.home,
             text: 'Home',
+
           ),
           GButton(
             icon: Icons.play_circle,
