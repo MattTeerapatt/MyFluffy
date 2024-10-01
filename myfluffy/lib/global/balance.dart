@@ -1,5 +1,5 @@
 double globalBalance = 2500.00;
-String namee = 'Johnny NiK Kah'; 
+String namee = 'Luffy D. Monkey'; 
 String emaill = 'JohnDoe@example.com'; 
 String locationn = 'Bangkok, Thailand';
 String birthdayy = 'January 1, 9999';
