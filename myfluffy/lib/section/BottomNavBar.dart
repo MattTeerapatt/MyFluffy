@@ -12,7 +12,7 @@ class MyBottomNavBar extends StatelessWidget {
       height: 80,
       padding: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
-        color: Color(0xFF330295),
+        color: Color.fromARGB(255, 255, 255, 255),
         boxShadow: [
           BoxShadow(
             blurRadius: 20,
