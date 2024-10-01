@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myfluffy/global/balance.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -8,12 +9,12 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String name = 'Johnny NiK Kah'; 
-  String email = 'JohnDoe@example.com'; 
-  String location = 'Bangkok, Thailand';
-  String birthday = 'January 1, 9999';
-  String phone = '+66 123 456 789';
-  String bankAccount = '123456781432'; 
+  String name = namee;
+  String email = emaill; 
+  String location = locationn;
+  String birthday = birthdayy;
+  String phone = phonee;
+  String bankAccount = bankAccountt; 
 
   @override
   Widget build(BuildContext context) {

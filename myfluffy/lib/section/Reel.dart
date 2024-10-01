@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myfluffy/screen/FindPage.dart';
 
 class Reel extends StatefulWidget {
   final name;
@@ -193,9 +194,12 @@ class _ReelState extends State<Reel> {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                    setState(() {
-                                      _isTapped = !_isTapped; // Toggle the _isTapped state when tapped
-                                    });
+                                      //navigate to FindPage
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => const FindPage()),
+                                      );
                                   },
                                     child: Text(
                                       'more details',

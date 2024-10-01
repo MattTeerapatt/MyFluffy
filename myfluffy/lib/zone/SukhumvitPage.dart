@@ -10,7 +10,7 @@ class SukhumvitPage extends StatelessWidget {
         title: const Text('Sukhumvit Page1'),
       ),
       body: const Center(
-        child: Text('Sukhumvit1 Nigga'),
+        child: Text('Sukhumvit1'),
       ),
     );
   }
