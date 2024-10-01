@@ -1,26 +1,27 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Forumpreviewtile extends StatelessWidget {
-  late String title;
-  late Image image;
-  Forumpreviewtile({super.key, required this.title, required this.image});
+  final Image image;  // Image object to display
+
+  Forumpreviewtile({super.key, required this.image});
 
   @override
   Widget build(BuildContext context) {
-  return Container(
-    padding: const EdgeInsets.all(8.0),
-    width: 150, 
-    child: Card(
-      color: Colors.white, 
-      child: Center(
-        child: ListTile(
-          leading: image,
-          title: Text(title, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
-          trailing: const Icon(Icons.arrow_forward_ios),
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0), // Spacing between tiles
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16.0), // Rounded corners
+            child: Container(
+              width: 150,  // Adjust the width of the tile
+              height: 142, // Adjust the height of the tile
+              child: image, // Display the image
+            ),
+          ),
+          const SizedBox(height: 8), // Space between image and text
+        ],
       ),
-    ),
-  );
-}
+    );
+  }
 }
