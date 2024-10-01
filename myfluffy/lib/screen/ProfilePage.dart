@@ -10,19 +10,24 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   String name = namee;
-  String email = emaill; 
+  String email = emaill;
   String location = locationn;
   String birthday = birthdayy;
   String phone = phonee;
-  String bankAccount = bankAccountt; 
+  String bankAccount = bankAccountt;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('$name\'s Profile'),
-        backgroundColor: Colors.yellow[300],
+        backgroundColor: Color(0xFF7B3FF4),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context); // Handle back navigation
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -38,7 +43,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               const SizedBox(height: 20),
-
               Text(
                 name,
                 style: const TextStyle(
@@ -47,7 +51,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               const SizedBox(height: 8),
-
               Text(
                 email,
                 style: const TextStyle(
@@ -56,7 +59,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               const SizedBox(height: 20),
-
               Card(
                 elevation: 3,
                 child: ListTile(
@@ -76,7 +78,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               const SizedBox(height: 10),
-
               Card(
                 elevation: 3,
                 child: ListTile(
@@ -96,7 +97,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               const SizedBox(height: 10),
-
               Card(
                 elevation: 3,
                 child: ListTile(
@@ -125,9 +125,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
   String _maskedBankAccount(String accountNumber) {
     if (accountNumber.length > 4) {
-      return '*' * (accountNumber.length - 4) + accountNumber.substring(accountNumber.length - 4);
+      return '*' * (accountNumber.length - 4) +
+          accountNumber.substring(accountNumber.length - 4);
     }
-    return accountNumber; 
+    return accountNumber;
   }
 
   void _editInfo(BuildContext context, String field, String currentValue,
@@ -164,5 +165,3 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
-
-

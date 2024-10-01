@@ -63,8 +63,17 @@ class _FindPageState extends State<FindPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Find Missing Cats'),
-        backgroundColor: Colors.yellow[300],
+        title: const Text('Find Missing Cats',style: TextStyle(color: Colors.white),),
+        backgroundColor: const Color(0xFF7B3FF4),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context); // Handle back navigation
+          },
+        
+        ),
+        
+      
         actions: [
           IconButton(
             icon: const Icon(Icons.sort),

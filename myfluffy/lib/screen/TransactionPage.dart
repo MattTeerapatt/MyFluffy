@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myfluffy/global/balance.dart';
 
@@ -8,28 +7,104 @@ class TransactionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 103, 99, 99),
-      body: SingleChildScrollView( // Wrap content inside SingleChildScrollView to make it scrollable
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(height: 50),
-            
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-              namee, 
-              style: TextStyle(fontSize: 20, color: Colors.white),
-              textAlign: TextAlign.center,
+      body: Stack(
+        children: [
+          // Gradient background
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xFF7B3FF4),  // Dark purple
+                  Color(0xFF9D63E7),  // Light purple
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
             ),
-            SizedBox(width: 60),
-            Icon( Icons.account_circle, color: Colors.white, size: 32),
+          ),
+          // Circular shape on the background
+          Positioned(
+            top: -100,
+            right: -100,
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                color: Color(0xFF9D63E7).withOpacity(0.5),
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 100,
+            left: -150,
+            child: Container(
+              width: 350,
+              height: 350,
+              decoration: BoxDecoration(
+                color: Color(0xFF7B3FF4).withOpacity(0.5),
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+                    Positioned(
+            top: 50,
+            left: -200,
+            child: Container(
+              width: 350,
+              height: 350,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 91, 35, 210).withOpacity(0.5),
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+          // Content
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 60),
+                Text(
+                  namee,
+                  style: TextStyle(
+                    fontSize: 28,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  emaill,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white70,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Row(
+                  children: [
+                    Text(
+                      (_maskedBankAccount(bankAccountt)),
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Spacer(),
+                    
+                  ],
+                ),
               ],
             ),
-            const SizedBox(height: 60),
-            
-            Container(
+          ),
+          Positioned(
+            top: 220,
+
+            child: 
+          Container(
               width: MediaQuery.of(context).size.width, // Full screen width
               height: MediaQuery.of(context).size.height, // Full screen height
               decoration: BoxDecoration(
@@ -171,11 +246,18 @@ class TransactionPage extends StatelessWidget {
                 ],
               ),
             ),
-            
-          
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
 }
+
+
+  String _maskedBankAccount(String accountNumber) {
+    if (accountNumber.length > 4) {
+      return '*' * (accountNumber.length - 4) + accountNumber.substring(accountNumber.length - 4);
+    }
+    return accountNumber; 
+  }
+
