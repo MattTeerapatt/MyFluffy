@@ -1,5 +1,13 @@
+# HOW TO RUN: 
+# 1. must have db postgres (docker exec -it SDA_db psql -U postgres)
+# 2. run python load_data.py 
+# 3. run python core_system.py
+# 4. enjoy คร้าบบบบบบบบบบบบ http://127.0.0.1:5000
+
+
+
+
 from flask import Flask, jsonify, request
-from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine, Column, String, Integer, ForeignKey, Text, Boolean, LargeBinary
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
@@ -18,6 +26,7 @@ Session = sessionmaker(bind=engine)
 
 Base = declarative_base()
 
+#__________________________________________________________________________________
 # Define the 'ads' table as a Python class
 class Ads(Base):
     __tablename__ = 'ads'
@@ -55,6 +64,8 @@ class Post(Base):
 
     # Relationship to users
     owner = relationship("User", back_populates="posts")
+
+#__________________________________________________________________________________
 
 # Dictionary schema to store all tables
 schema = {Ads.__tablename__: Ads, 
