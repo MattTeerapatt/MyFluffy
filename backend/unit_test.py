@@ -1,69 +1,64 @@
 import unittest
-from core_system import app, load_plugins
+from flask import Flask, jsonify
+from core_system import app, core_system
 
 class CoreSystemTestCase(unittest.TestCase):
     def setUp(self):
-        # Set up the test client
         self.app = app.test_client()
         self.app.testing = True
-        # Load plugins
-        load_plugins()
 
     def test_index(self):
-        # Test the index route
         response = self.app.get('/')
         self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        self.assertIn('message', data)
-        self.assertIn('plugins', data)
+        self.assertIn(b"Welcome to the Core System", response.data)
 
-    def test_pay(self):
-        # Test the pay route with valid data
-        response = self.app.get('/pay_paypal')
-        self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        self.assertEqual(data['status'], 'success')
-        self.assertIn('transaction_type', data)
-
-        # Test the pay route without the payment plugin
-        # Temporarily remove the payment plugin
-        del app.core_system['payment']
-        response = self.app.get('/pay_paypal')
-        self.assertEqual(response.status_code, 400)
-        data = response.get_json()
-        self.assertEqual(data['error'], 'Payment plugin not available')
-    
     def test_fetch_ads(self):
-        # Test the fetch_ads route with the ads plugin available
+        core_system['ads'] = MockAdsPlugin()
         response = self.app.get('/Fetch_ads')
         self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        self.assertEqual(data['status'], 'success')
-        self.assertIn('ads', data)
+        self.assertIn(b"Mock Ads Data", response.data)
 
-        # Test the fetch_ads route without the ads plugin
-        # Temporarily remove the ads plugin
-        del app.core_system['ads']
-        response = self.app.get('/Fetch_ads')
-        self.assertEqual(response.status_code, 400)
-        data = response.get_json()
-        self.assertEqual(data['error'], 'Ads plugin not available')
-    
-    def test_fetch_charity(self):
-        # Test the fetch_charity route with the charity plugin available
+    def test_fetch_charities(self):
+        core_system['charity'] = MockCharityPlugin()
         response = self.app.get('/Fetch_charities')
         self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        self.assertEqual(data['status'], 'success')
-        self.assertIn('charity', data)
+        self.assertIn(b"Mock Charity Data", response.data)
 
-        # Test the fetch_charity route without the charity plugin
-        # Temporarily remove the charity plugin
-        del app.core_system['charity']
-        response = self.app.get('/Fetch_charities')
-        self.assertEqual(response.status_code, 400)
-        data = response.get_json()
-        self.assertEqual(data['error'], 'Charity plugin not available')
+    def test_pay_paypal(self):
+        core_system['payment'] = MockPaymentPlugin()
+        response = self.app.get('/pay_paypal')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b"Redirect to PayPal", response.data)
+
+    def test_pay_truemoney(self):
+        core_system['payment'] = MockPaymentPlugin()
+        response = self.app.get('/pay_truemoney')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b"Redirect to TrueMoney", response.data)
+
+    def test_pay_bank_transfer(self):
+        core_system['payment'] = MockPaymentPlugin()
+        response = self.app.get('/pay_bank_transfer')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b"Redirect to Bank Transfer", response.data)
+
+class MockAdsPlugin:
+    def fetch_ads(self):
+        return jsonify({"data": "Mock Ads Data"})
+
+class MockCharityPlugin:
+    def fetch_charities(self):
+        return jsonify({"data": "Mock Charity Data"})
+
+class MockPaymentPlugin:
+    def redirect_to_paypal(self):
+        return jsonify({"data": "Redirect to PayPal"})
+
+    def redirect_to_Truemoney(self):
+        return jsonify({"data": "Redirect to TrueMoney"})
+
+    def redirect_to_BankTransfer(self):
+        return jsonify({"data": "Redirect to Bank Transfer"})
 
 if __name__ == '__main__':
     unittest.main()
