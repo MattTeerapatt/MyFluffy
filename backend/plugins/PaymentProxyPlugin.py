@@ -1,9 +1,11 @@
 from plugins.BasePlugin import BasePlugin
 from flask import jsonify
+from flask import current_app
 
 class PaymentPlugin(BasePlugin):
-    def register(self, core_system):
-        core_system['payment'] = self #save this object to core_system with key 'payment'
+    def register(self):
+        self.name = 'payment'
+        current_app.core_system['payment'] = self #save this object to core_system with key 'payment'
 
     def redirect_to_paypal(self):
         return jsonify({"status": "success", "transaction_type": "Paypal"})
@@ -14,6 +16,6 @@ class PaymentPlugin(BasePlugin):
     def redirect_to_BankTransfer(self):
         return jsonify({"status": "success", "transaction_type": "Bank Transfer"})
 
-def register(core_system):
+def register():
     plugin = PaymentPlugin()
-    plugin.register(core_system)
+    plugin.register()

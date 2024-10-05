@@ -1,19 +1,22 @@
 from plugins.BasePlugin import BasePlugin
 from flask import jsonify
-from core_system import Ads
+from flask import current_app
 
 class AdsPlugin(BasePlugin):
-    def register(self, core_system):
-        core_system['ads'] = self  # Save this object to core_system with key 'ads'
+    def register(self):
+        self.name = 'ads'
+        self.schema = current_app.schema[self.name]
+        self.session = current_app.Session
+        current_app.core_system['ads'] = self  # Save this object to core_system with key 'ads'
 
     def fetch_ads(self):
-        ads = Ads.query.all()
+        ads = self.session.query(self.schema).all()
         if not ads:
                 return jsonify({"status": "success", "ads": []})
         ads_list = [ad.content for ad in ads]
         return jsonify({"status": "success", "ads": ads_list})
 
 # Register the plugin
-def register(core_system):
+def register():
     plugin = AdsPlugin()
-    plugin.register(core_system)
+    plugin.register()

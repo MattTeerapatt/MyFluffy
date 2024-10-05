@@ -1,19 +1,22 @@
 from plugins.BasePlugin import BasePlugin
 from flask import jsonify
-from core_system import Charity
+from flask import current_app
 
 class CharitiesPlugin(BasePlugin):
-    def register(self, core_system):
-        core_system['charity'] = self  # Save this object to core_system with key 'charity'
+    def register(self):
+        self.name = 'charity'
+        self.schema = current_app.schema[self.name]
+        self.session = current_app.Session
+        current_app.core_system['charity'] = self
 
     def fetch_charities(self):
-        charities = Charity.query.all()
+        charities = self.session.query.all(self.schema)
         if not charities:
                 return jsonify({"status": "success", "charity": []})
         charities_list = [c.content for c in charities]
         return jsonify({"status": "success", "charity": charities_list})
 
 # Register the plugin
-def register(core_system):
+def register():
     plugin = CharitiesPlugin()
-    plugin.register(core_system)
+    plugin.register()

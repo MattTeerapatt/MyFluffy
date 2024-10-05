@@ -1,27 +1,69 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine, Column, String, Integer, ForeignKey, Text, Boolean, LargeBinary
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.dialects.postgresql import BYTEA
+from geoalchemy2 import Geography  # Needed for PostGIS 'GEOGRAPHY' type
 import os
 import importlib.util
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@localhost:5432/core_system_db'
-#before running this, create a database called core_system_db in postgres and run the following line:
-#psql -U username -d core_system_db -f path/to/init.sql 
+DATABASE_URI = 'postgresql://postgres:password@localhost:5432/postgres'
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+
+engine = create_engine(DATABASE_URI)
+Session = sessionmaker(bind=engine)
+
+Base = declarative_base()
+
+# Define the 'ads' table as a Python class
+class Ads(Base):
+    __tablename__ = 'ads'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    content = Column(String(200), nullable=False)
+
+# Define the 'charity' table as a Python class
+class Charity(Base):
+    __tablename__ = 'charity'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    content = Column(String(200), nullable=False)
+
+# Users table model
+class User(Base):
+    __tablename__ = 'users'
+    user_id = Column(String, primary_key=True)
+    name = Column(String, nullable=False)
+    password = Column(String, nullable=False)  # Store encrypted password
+    phone_number = Column(String, nullable=False)
+    money = Column(Integer)
+
+    # Relationship to posts (one-to-many)
+    posts = relationship("Post", back_populates="owner", cascade="all, delete")
+
+# Posts table model
+class Post(Base):
+    __tablename__ = 'posts'
+    post_id = Column(String, primary_key=True)
+    owner_id = Column(String, ForeignKey('users.user_id', ondelete='CASCADE'), nullable=False)
+    description = Column(Text)
+    location = Column(Geography(geometry_type='POINT', srid=4326))  # Use PostGIS 'GEOGRAPHY'
+    image = Column(BYTEA)  # Binary data for image
+    reward = Column(Integer)
+    found = Column(Boolean)
+
+    # Relationship to users
+    owner = relationship("User", back_populates="posts")
+
+# Dictionary schema to store all tables
+schema = {Ads.__tablename__: Ads, 
+          Charity.__tablename__: Charity, 
+          User.__tablename__: User, 
+          Post.__tablename__: Post}
 
 # Initialize core system
 core_system = {}
-
-class Ads(db.Model):
-    __tablename__ = 'ads'
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(200), nullable=False)
-    
-class Charity(db.Model):
-    __tablename__ = 'charity'
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(200), nullable=False)
 
 def load_plugins():
     plugins_dir = os.path.join(os.path.dirname(__file__), 'plugins')
@@ -32,8 +74,12 @@ def load_plugins():
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
             if hasattr(module, 'register'):
-                module.register(core_system)
-    app.core_system = core_system  # Attach core_system to app
+                module.register()
+
+
+app.core_system = core_system
+app.Session = Session()
+app.schema = schema
 
 @app.route('/')
 def index():
@@ -71,8 +117,9 @@ def pay_bank_transfer():
     return jsonify({"error": "Payment plugin not available"}), 400
 
 if __name__ == '__main__':
-    db.create_all()
-    load_plugins()
+    with app.app_context():
+        load_plugins()
+    print("Plugins loaded:", list(core_system.keys()))
     app.run(debug=True)
     
 #in db:
