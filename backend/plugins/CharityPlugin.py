@@ -10,7 +10,7 @@ class CharitiesPlugin(BasePlugin):
         current_app.core_system['charity'] = self
 
     def fetch_charities(self):
-        charities = self.session.query.all(self.schema)
+        charities = self.session.query(self.schema).all()
         if not charities:
                 return jsonify({"status": "success", "charity": []})
         charities_list = [c.content for c in charities]
