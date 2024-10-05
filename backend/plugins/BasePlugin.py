@@ -1,3 +1,3 @@
 class BasePlugin:
-    def register(self, core_system):
+    def register(self):
         raise NotImplementedError("Plugins must implement the register method")
