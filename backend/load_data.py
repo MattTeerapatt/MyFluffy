@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine, Column, String, Integer, ForeignKey, Text, Boolean, LargeBinary
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 from sqlalchemy.dialects.postgresql import BYTEA
 from geoalchemy2 import Geography  # Needed for PostGIS 'GEOGRAPHY' type
 from sqlalchemy.exc import IntegrityError
