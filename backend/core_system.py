@@ -30,13 +30,15 @@ Base = declarative_base()
 class Ads(Base):
     __tablename__ = 'ads'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    content = Column(String(200), nullable=False)
+    link = Column(String(200), nullable=True)  
+    picture = Column(LargeBinary, nullable=True)  
 
 # Define the 'charity' table as a Python class
 class Charity(Base):
     __tablename__ = 'charity'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    content = Column(String(200), nullable=False)
+    link = Column(String(200), nullable=True)  
+    picture = Column(BYTEA, nullable=True)  
 
 # Users table model
 class User(Base):
@@ -45,7 +47,9 @@ class User(Base):
     name = Column(String, nullable=False)
     password = Column(String, nullable=False)  # Store encrypted password
     phone_number = Column(String, nullable=False)
-    money = Column(Integer)
+    email = Column(String, nullable=False)
+    Bankaccount = Column(String, nullable=False)
+    
 
     # Relationship to posts (one-to-many)
     posts = relationship("Post", back_populates="owner", cascade="all, delete")
@@ -58,7 +62,7 @@ class Post(Base):
     description = Column(Text)
     location = Column(Geography(geometry_type='POINT', srid=4326))  # Use PostGIS 'GEOGRAPHY'
     image = Column(BYTEA)  # Binary data for image
-    reward = Column(Integer)
+    reward = Column(String)
     found = Column(Boolean)
 
     # Relationship to users

@@ -13,7 +13,7 @@ class CharitiesPlugin(BasePlugin):
         charities = self.session.query(self.schema).all()
         if not charities:
                 return jsonify({"status": "success", "charity": []})
-        charities_list = [c.content for c in charities]
+        charities_list = [c.id for c in charities]
         return jsonify({"status": "success", "charity": charities_list})
 
 # Register the plugin

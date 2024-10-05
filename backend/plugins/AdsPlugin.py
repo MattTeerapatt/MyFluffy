@@ -13,7 +13,7 @@ class AdsPlugin(BasePlugin):
         ads = self.session.query(self.schema).all()
         if not ads:
                 return jsonify({"status": "success", "ads": []})
-        ads_list = [ad.content for ad in ads]
+        ads_list = [ad.id for ad in ads]
         return jsonify({"status": "success", "ads": ads_list})
 
 # Register the plugin
