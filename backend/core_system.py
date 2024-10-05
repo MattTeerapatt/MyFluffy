@@ -1,5 +1,5 @@
 # HOW TO RUN: 
-# 1. must have db postgres (docker exec -it SDA_db psql -U postgres)
+# 1. must have db postgres (docker run --name SDA_db -e POSTGRES_PASSWORD=password -d -p 5432:5432 postgres)
 # 2. run python load_data.py 
 # 3. run python core_system.py
 # 4. enjoy คร้าบบบบบบบบบบบบ http://127.0.0.1:5000
