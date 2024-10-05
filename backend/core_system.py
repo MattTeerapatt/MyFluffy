@@ -11,7 +11,6 @@ from flask import Flask, jsonify, request
 from sqlalchemy import create_engine, Column, String, Integer, ForeignKey, Text, Boolean, LargeBinary
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 from sqlalchemy.dialects.postgresql import BYTEA
-from geoalchemy2 import Geography  # Needed for PostGIS 'GEOGRAPHY' type
 import os
 import importlib.util
 
@@ -60,7 +59,7 @@ class Post(Base):
     post_id = Column(String, primary_key=True)
     owner_id = Column(String, ForeignKey('users.user_id', ondelete='CASCADE'), nullable=False)
     description = Column(Text)
-    location = Column(Geography(geometry_type='POINT', srid=4326))  # Use PostGIS 'GEOGRAPHY'
+    location = Column(String)  # Use PostGIS 'GEOGRAPHY'
     image = Column(BYTEA)  # Binary data for image
     reward = Column(String)
     found = Column(Boolean)
