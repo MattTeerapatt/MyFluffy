@@ -1,6 +1,7 @@
 from plugins.BasePlugin import BasePlugin
 from flask import jsonify
 from flask import current_app
+import base64
 
 class PostsPlugin(BasePlugin):
     def register(self):
@@ -21,6 +22,29 @@ class PostsPlugin(BasePlugin):
         if not posts:
                 return jsonify({"status": "success", "post": []})
         return jsonify({"status": "success", "post": by_location})
+    
+    def AddPost(self, data):
+        post = self.schema(
+            owner_id = data.get('owner_id'),
+            pet_name = data.get('pet_name'),
+            description = data.get('description'),
+            location = data.get('location'),  # Expected format: 'POINT(longitude latitude)'
+            image = data.get('image'),  # Expected to be base64 encoded
+            reward = data.get('reward'),
+            found = False
+        )
+        try:
+            self.session.add(post)
+            self.session.commit()
+        except Exception as e:
+            self.session.rollback()
+            return jsonify({"status": "error", "message": str(e)}), 400
+        
+
+        return jsonify({"status": "success", "post": self.to_dict(post)})
+
+
+
     
     def to_dict(self, post):
         return {
