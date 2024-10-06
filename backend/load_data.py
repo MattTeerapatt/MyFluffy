@@ -1,10 +1,11 @@
+import uuid
 from sqlalchemy import create_engine, Column, String, Integer, ForeignKey, Text, Boolean, LargeBinary
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 from sqlalchemy.dialects.postgresql import BYTEA
 from sqlalchemy.exc import IntegrityError
 
 # Database connection
-DATABASE_URL = 'postgresql://postgres:password@localhost:5432/postgres'
+DATABASE_URL = 'postgresql+psycopg2://postgres:password@localhost:5432/postgres'
 engine = create_engine(DATABASE_URL)
 
 # Base class for declarative models
@@ -27,9 +28,10 @@ class Charity(Base):
 # Users table model
 class User(Base):
     __tablename__ = 'users'
-    user_id = Column(String, primary_key=True)
+    user_id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     name = Column(String, nullable=False)
     password = Column(String, nullable=False)  # Store encrypted password
+    location = Column(String)
     phone_number = Column(String, nullable=False)
     email = Column(String, nullable=False)
     Bankaccount = Column(String, nullable=False)
@@ -41,10 +43,11 @@ class User(Base):
 # Posts table model
 class Post(Base):
     __tablename__ = 'posts'
-    post_id = Column(String, primary_key=True)
+    post_id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     owner_id = Column(String, ForeignKey('users.user_id', ondelete='CASCADE'), nullable=False)
+    pet_name = Column(String, nullable=False)
     description = Column(Text)
-    location = Column(String)  # Use PostGIS 'GEOGRAPHY'
+    location = Column(String)
     image = Column(BYTEA)  # Binary data for image
     reward = Column(String)
     found = Column(Boolean)
@@ -72,17 +75,23 @@ try:
     session.add_all([charity1, charity2])
 
     # Add mock users
-    user1 = User(user_id='user_001', name='John Doe', password='encrypted_pwd1', phone_number='123-456-7890', email='john@example.com', Bankaccount='123456789')
-    user2 = User(user_id='user_002', name='Jane Smith', password='encrypted_pwd2', phone_number='987-654-3210', email='jane@example.com', Bankaccount='987654321')
+    user1 = User(name='John Doe', password='encrypted_pwd1', phone_number='123-456-7890', email='john@example.com', Bankaccount='123456789')
+    user2 = User(name='Jane Smith', password='encrypted_pwd2', phone_number='987-654-3210', email='jane@example.com', Bankaccount='987654321')
     session.add_all([user1, user2])
-
+    
+    
     # Add mock posts
-    post1 = Post(post_id='post_001', owner_id='user_001', description='Lost Dog', location='POINT(100.0 0.0)', image=None, reward='50', found=False)
-    post2 = Post(post_id='post_002', owner_id='user_002', description='Found Cat', location='POINT(101.0 1.0)', image=None, reward='100', found=True)
+    #get user_id
+    user1_id = session.query(User).filter_by(name='John Doe').first().user_id
+    user2_id = session.query(User).filter_by(name='Jane Smith').first().user_id
+    post1 = Post(owner_id=str(user1_id), pet_name='Tom', description='Lost Dog', location='100.0 0.0', image=None, reward='50', found=False)
+    post2 = Post(owner_id=str(user2_id), pet_name='Jerry', description='Found Cat', location='101.0 1.0', image=None, reward='100', found=True)
     session.add_all([post1, post2])
 
     # Commit the changes
     session.commit()
+
+    print("Data loaded successfully!")
 
 except IntegrityError as e:
     print(f"An error occurred: {e}")

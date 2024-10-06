@@ -6,7 +6,7 @@
 
 
 
-
+import uuid
 from flask import Flask, jsonify, request
 from sqlalchemy import create_engine, Column, String, Integer, ForeignKey, Text, Boolean, LargeBinary
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
@@ -15,7 +15,7 @@ import os
 import importlib.util
 
 app = Flask(__name__)
-DATABASE_URI = 'postgresql://postgres:password@localhost:5432/postgres'
+DATABASE_URI = 'postgresql+psycopg2://postgres:password@localhost:5432/postgres'
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -42,9 +42,10 @@ class Charity(Base):
 # Users table model
 class User(Base):
     __tablename__ = 'users'
-    user_id = Column(String, primary_key=True)
+    user_id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     name = Column(String, nullable=False)
     password = Column(String, nullable=False)  # Store encrypted password
+    location = Column(String)
     phone_number = Column(String, nullable=False)
     email = Column(String, nullable=False)
     Bankaccount = Column(String, nullable=False)
@@ -56,8 +57,9 @@ class User(Base):
 # Posts table model
 class Post(Base):
     __tablename__ = 'posts'
-    post_id = Column(String, primary_key=True)
+    post_id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     owner_id = Column(String, ForeignKey('users.user_id', ondelete='CASCADE'), nullable=False)
+    pet_name = Column(String, nullable=False)
     description = Column(Text)
     location = Column(String)  # Use PostGIS 'GEOGRAPHY'
     image = Column(BYTEA)  # Binary data for image
@@ -128,6 +130,12 @@ def pay_bank_transfer():
     if 'payment' in core_system:
         return core_system['payment'].redirect_to_BankTransfer()
     return jsonify({"error": "Payment plugin not available"}), 400
+
+@app.route('/FetchAllPost', methods=['GET'])
+def FetchAllPost():
+    if 'post' in core_system:
+        return core_system['post'].FetchAllPost()
+    return jsonify({"error": "Post plugin not available"}), 400
 
 if __name__ == '__main__':
     with app.app_context():
