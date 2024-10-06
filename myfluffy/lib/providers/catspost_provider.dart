@@ -16,20 +16,33 @@ class CatspostProvider with ChangeNotifier {
     notifyListeners();
 
     final response = await http.get(Uri.parse('http://localhost:5000/FetchAllPost'));
-    
 
     if (response.statusCode == 200) {
-      final List<dynamic> data = json.decode(response.body);
-      _posts = data.map((post) => Post(
-        description: post['description'],
-        found: post['found'],
-        image: post['image'],
-        location: post['location'],
-        ownerId: post['owner_id'],
-        petName: post['pet_name'],
-        postId: post['post_id'],
-        reward: post['reward'],
-      )).toList();
+      final Map<String, dynamic> data = json.decode(response.body);
+
+      // Access the 'post' field and extract all posts
+      List<Post> allPosts = [];
+      if (data.containsKey('post')) {
+        data['post'].forEach((location, posts) {
+          // Check if posts is a List
+          if (posts is List) {
+            allPosts.addAll(posts.map((post) => Post(
+              description: post['description'],
+              found: post['found'],
+              image: post['image'],
+              location: location, // Set the location from the key
+              ownerId: post['owner_id'],
+              petName: post['pet_name'],
+              postId: post['post_id'],
+              reward: post['reward'],
+            )));
+          }
+        });
+      }
+
+      _posts = allPosts;
+
+      // Debugging output
       print('Fetched Posts:');
       for (var post in _posts) {
         print('Post ID: ${post.postId}, Image: ${post.image}');
@@ -42,6 +55,7 @@ class CatspostProvider with ChangeNotifier {
     notifyListeners();
   }
 
+
   // Fetch posts by location
   Future<void> fetchPostsByLocation(String location) async {
     _isLoading = true;
@@ -50,17 +64,30 @@ class CatspostProvider with ChangeNotifier {
     final response = await http.get(Uri.parse('http://localhost:5000/FetchPostByLocation?location=$location'));
 
     if (response.statusCode == 200) {
-      final List<dynamic> data = json.decode(response.body);
-      _posts = data.map((post) => Post(
-        description: post['description'],
-        found: post['found'],
-        image: post['image'],
-        location: post['location'],
-        ownerId: post['owner_id'],
-        petName: post['pet_name'],
-        postId: post['post_id'],
-        reward: post['reward'],
-      )).toList();
+      final Map<String, dynamic> data = json.decode(response.body);
+
+      // Ensure we are looking for the specific location's posts
+      if (data.containsKey('post') && data['post'].containsKey(location)) {
+        final List<dynamic> posts = data['post'][location];
+        _posts = posts.map((post) => Post(
+          description: post['description'],
+          found: post['found'],
+          image: post['image'],
+          location: post['location'],
+          ownerId: post['owner_id'],
+          petName: post['pet_name'],
+          postId: post['post_id'],
+          reward: post['reward'],
+        )).toList();
+        
+        // Debugging output
+        print('Fetched Posts for $location:');
+        for (var post in _posts) {
+          print('Post ID: ${post.postId}, Image: ${post.image}');
+        }
+      } else {
+        throw Exception('No posts found for this location');
+      }
     } else {
       throw Exception('Failed to load posts by location');
     }
@@ -97,4 +124,5 @@ class CatspostProvider with ChangeNotifier {
     _isLoading = false;
     notifyListeners();
   }
+
 }
