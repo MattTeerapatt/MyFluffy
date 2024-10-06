@@ -57,7 +57,7 @@ class CoreSystemTestCase(unittest.TestCase):
 
         # Define the test data
         test_data = {
-            "owner_id": "existing_user_id",
+            "owner_id": "b75c7db5-9eee-403e-92d2-d0f84959e437",
             "pet_name": "Parrot",
             "description": "Lost Parrot",
             "location": "POINT(100.0 0.0)",
@@ -65,18 +65,24 @@ class CoreSystemTestCase(unittest.TestCase):
             "reward": "100"
         }
 
+        # Mock the PostsPlugin
+        core_system['posts'] = MockPostsPlugin()
+
         # Simulate a POST request to the /PostPostings endpoint
         response = self.app.post('/PostPostings', data=json.dumps(test_data), content_type='application/json')
 
         # Check the response
         self.assertEqual(response.status_code, 201)
         response_data = json.loads(response.data)
-        self.assertEqual(response_data['owner_id'], test_data['owner_id'])
-        self.assertEqual(response_data['pet_name'], test_data['pet_name'])
-        self.assertEqual(response_data['description'], test_data['description'])
-        self.assertEqual(response_data['location'], test_data['location'])
-        self.assertEqual(response_data['reward'], test_data['reward'])
-        self.assertFalse(response_data['found'])
+        self.assertEqual(response_data['status'], "success")
+        self.assertEqual(response_data['post']['owner_id'], test_data['owner_id'])
+        self.assertEqual(response_data['post']['pet_name'], test_data['pet_name'])
+        self.assertEqual(response_data['post']['description'], test_data['description'])
+        self.assertEqual(response_data['post']['location'], test_data['location'])
+        self.assertEqual(response_data['post']['reward'], test_data['reward'])
+        self.assertIsNone(response_data['post']['image'])
+        self.assertFalse(response_data['post']['found'])
+
 
 
 class MockAdsPlugin:
@@ -96,6 +102,20 @@ class MockPaymentPlugin:
 
     def redirect_to_BankTransfer(self):
         return jsonify({"data": "Redirect to Bank Transfer"})
+
+class MockPostsPlugin:
+    def AddPost(self, data):
+        post = {
+            'post_id': '6e330118-d037-48a3-aa3b-381dbaf30b55',
+            'owner_id': data.get('owner_id'),
+            'pet_name': data.get('pet_name'),
+            'description': data.get('description'),
+            'location': data.get('location'),
+            'reward': data.get('reward'),
+            'image': None,
+            'found': False,
+        }
+        return jsonify({"status": "success", "post": post}), 201
 
 if __name__ == '__main__':
     unittest.main()
