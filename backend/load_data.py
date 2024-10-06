@@ -64,6 +64,12 @@ session = Session()
 
 # Mock Data
 try:
+    # Drop all existing data
+    session.query(Ads).delete()
+    session.query(Charity).delete()
+    session.query(User).delete()
+    session.query(Post).delete()
+
     # Ads data
     ad1 = Ads(link='http://example.com/ad1', picture=b'Test Picture 1')
     ad2 = Ads(link='http://example.com/ad2', picture=b'Test Picture 2')
@@ -84,9 +90,17 @@ try:
     #get user_id
     user1_id = session.query(User).filter_by(name='John Doe').first().user_id
     user2_id = session.query(User).filter_by(name='Jane Smith').first().user_id
-    post1 = Post(owner_id=str(user1_id), pet_name='Tom', description='Lost Dog', location='100.0 0.0', image=None, reward='50', found=False)
-    post2 = Post(owner_id=str(user2_id), pet_name='Jerry', description='Found Cat', location='101.0 1.0', image=None, reward='100', found=True)
-    session.add_all([post1, post2])
+    post1 = Post(owner_id=str(user1_id), pet_name='Tom', description='Lost Cat', location='Bangkok', image=None, reward='50', found=False)
+    post2 = Post(owner_id=str(user2_id), pet_name='Jerry', description='pls help rat', location='ladkrabang', image=None, reward='100', found=False)
+    post3 = Post(owner_id=str(user1_id), pet_name='Fluffy', description='Where is my Fluffy', location='Bangkok', image=None, reward='200', found=False)
+    post4 = Post(owner_id=str(user2_id), pet_name='Snowball', description='Snowball is missing', location='Bangkok', image=None, reward='300', found=False)
+    post5 = Post(owner_id=str(user1_id), pet_name='Bella', description='Bella is lost', location='Bangkok', image=None, reward='250', found=False)
+    post6 = Post(owner_id=str(user2_id), pet_name='Garfield', description='Pls don\'t let him get eaten', location='Bangkok', image=None, reward='150', found=False)
+    post7 = Post(owner_id=str(user1_id), pet_name='Kitty', description='Is Kitty right behind you?', location='ladkrabang', image=None, reward='250', found=False)
+    post8 = Post(owner_id=str(user2_id), pet_name='Whiskers', description='Whiskers? Whiskeys???', location='ladkrabang', image=None, reward='300', found=False)
+    post9 = Post(owner_id=str(user1_id), pet_name='Siamese', description='The Siamese cat (Thai: แมวไทย, Maeo Thai; แมวสยาม, Maeo Sayam) is one of the first distinctly recognised breeds of Asian cat. The Siamese Cat derived from the Wichianmat landrace. They are one of several varieties of cats native to Thailand (known as Siam prior to 1939), the original Siamese became one of the most popular breeds in Europe and North America in the 19th century.[1] Siamese cats have a distinctive colourpoint coat, resulting from a temperature-sensitive type of albinism.', location='Bangkok', image=None, reward='200', found=False)
+    post10 = Post(owner_id=str(user2_id), pet_name='Tom&Jerry', description='IS THAT A CAT OR A CARTOON CD THAT WENT MISSING?!?!', location='Bangkok', image=None, reward='300', found=False)
+    session.add_all([post1, post2, post3, post4, post5, post6, post7, post8, post9, post10])
 
     # Commit the changes
     session.commit()

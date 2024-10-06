@@ -61,7 +61,7 @@ class Post(Base):
     owner_id = Column(String, ForeignKey('users.user_id', ondelete='CASCADE'), nullable=False)
     pet_name = Column(String, nullable=False)
     description = Column(Text)
-    location = Column(String)  # Use PostGIS 'GEOGRAPHY'
+    location = Column(String)
     image = Column(BYTEA)  # Binary data for image
     reward = Column(String)
     found = Column(Boolean)
@@ -133,9 +133,16 @@ def pay_bank_transfer():
 
 @app.route('/FetchAllPost', methods=['GET'])
 def FetchAllPost():
-    if 'post' in core_system:
-        return core_system['post'].FetchAllPost()
+    if 'posts' in core_system:
+        return core_system['posts'].FetchAllPost()
     return jsonify({"error": "Post plugin not available"}), 400
+
+#get user by id
+@app.route('/FetchUserById/<string:id>', methods=['GET'])
+def FetchUserById(id):
+    if 'users' in core_system:
+        return core_system['users'].fetch_user_by_id(id)
+    return jsonify({"error": "User plugin not available"}), 400
 
 if __name__ == '__main__':
     with app.app_context():

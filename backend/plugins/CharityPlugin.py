@@ -7,7 +7,7 @@ class CharitiesPlugin(BasePlugin):
         self.name = 'charity'
         self.schema = current_app.schema[self.name]
         self.session = current_app.Session
-        current_app.core_system['charity'] = self
+        current_app.core_system[self.name] = self
 
     def fetch_charities(self):
         charities = self.session.query(self.schema).all()

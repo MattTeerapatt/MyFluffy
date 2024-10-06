@@ -5,7 +5,7 @@ from flask import current_app
 class PaymentPlugin(BasePlugin):
     def register(self):
         self.name = 'payment'
-        current_app.core_system['payment'] = self #save this object to core_system with key 'payment'
+        current_app.core_system[self.name] = self #save this object to core_system with key 'payment'
 
     def redirect_to_paypal(self):
         return jsonify({"status": "success", "transaction_type": "Paypal"})
