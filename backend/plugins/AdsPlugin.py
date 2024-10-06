@@ -3,6 +3,18 @@ from flask import jsonify
 from flask import current_app
 
 class AdsPlugin(BasePlugin):
+    _instance = None
+    
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super(AdsPlugin, cls).__new__(cls, *args, **kwargs)
+        return cls._instance
+    
+    def __init__(self):
+        if not hasattr(self, 'initialized'):  
+            self.name = 'ads'
+            self.initialized = True
+            
     def register(self):
         self.name = 'ads'
         self.schema = current_app.schema[self.name]
