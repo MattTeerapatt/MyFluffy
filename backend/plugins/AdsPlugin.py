@@ -7,7 +7,7 @@ class AdsPlugin(BasePlugin):
         self.name = 'ads'
         self.schema = current_app.schema[self.name]
         self.session = current_app.Session
-        current_app.core_system['ads'] = self  # Save this object to core_system with key 'ads'
+        current_app.core_system[self.name] = self  # Save this object to core_system with key 'ads'
 
     def fetch_ads(self):
         ads = self.session.query(self.schema).all()
