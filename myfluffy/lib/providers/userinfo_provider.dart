@@ -6,9 +6,11 @@ import 'package:myfluffy/model/user.dart';
 
 class UserInfoProvider with ChangeNotifier {
   User? _user;
+  User? _currentUser;
   bool _isLoading = false;
 
   User? get user => _user;
+  User? get currentUser => _currentUser;
   bool get isLoading => _isLoading;
 
   // Fetch user data by ID
@@ -43,6 +45,12 @@ class UserInfoProvider with ChangeNotifier {
     }
 
     _isLoading = false;
+    notifyListeners();
+  }
+
+  // set current user
+  void setCurrentUser(User user) {
+    _currentUser = user;
     notifyListeners();
   }
 }
