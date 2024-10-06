@@ -5,9 +5,10 @@ import 'package:myfluffy/model/post.dart';
 
 class CatspostProvider with ChangeNotifier {
   List<Post> _posts = [];
+  List<Post> _filteredPosts = [];
   bool _isLoading = false;
 
-  List<Post> get posts => _posts;
+  List<Post> get posts => _filteredPosts.isEmpty ? _posts : _filteredPosts;
   bool get isLoading => _isLoading;
 
   // Fetch all posts
@@ -20,17 +21,15 @@ class CatspostProvider with ChangeNotifier {
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
 
-      // Access the 'post' field and extract all posts
       List<Post> allPosts = [];
       if (data.containsKey('post')) {
         data['post'].forEach((location, posts) {
-          // Check if posts is a List
           if (posts is List) {
             allPosts.addAll(posts.map((post) => Post(
               description: post['description'],
               found: post['found'],
               image: post['image'],
-              location: location, // Set the location from the key
+              location: location,
               ownerId: post['owner_id'],
               petName: post['pet_name'],
               postId: post['post_id'],
@@ -42,7 +41,6 @@ class CatspostProvider with ChangeNotifier {
 
       _posts = allPosts;
 
-      // Debugging output
       print('Fetched Posts:');
       for (var post in _posts) {
         print('Post ID: ${post.postId}, Image: ${post.image}');
@@ -55,7 +53,6 @@ class CatspostProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
   // Fetch posts by location
   Future<void> fetchPostsByLocation(String location) async {
     _isLoading = true;
@@ -66,7 +63,6 @@ class CatspostProvider with ChangeNotifier {
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
 
-      // Ensure we are looking for the specific location's posts
       if (data.containsKey('post') && data['post'].containsKey(location)) {
         final List<dynamic> posts = data['post'][location];
         _posts = posts.map((post) => Post(
@@ -80,7 +76,6 @@ class CatspostProvider with ChangeNotifier {
           reward: post['reward'],
         )).toList();
         
-        // Debugging output
         print('Fetched Posts for $location:');
         for (var post in _posts) {
           print('Post ID: ${post.postId}, Image: ${post.image}');
@@ -93,6 +88,25 @@ class CatspostProvider with ChangeNotifier {
     }
 
     _isLoading = false;
+    notifyListeners();
+  }
+
+  // Search posts by location or pet name
+  void searchPosts(String query) {
+    if (query.isEmpty) {
+      _filteredPosts = [];
+    } else {
+      _filteredPosts = _posts.where((post) =>
+        post.location.toLowerCase().contains(query.toLowerCase()) ||
+        post.petName.toLowerCase().contains(query.toLowerCase())
+      ).toList();
+    }
+    notifyListeners();
+  }
+
+  // Sort posts by pet name
+  void sortPosts() {
+    _posts.sort((a, b) => a.petName.compareTo(b.petName));
     notifyListeners();
   }
 
@@ -124,5 +138,4 @@ class CatspostProvider with ChangeNotifier {
     _isLoading = false;
     notifyListeners();
   }
-
 }

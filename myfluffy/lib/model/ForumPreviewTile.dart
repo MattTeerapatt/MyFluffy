@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Required for rootBundle
 
 class Forumpreviewtile extends StatelessWidget {
-  final String? imageUrl;  // Image URL from the post (nullable)
   final Uint8List? imageData; // Binary image data (nullable)
 
-  Forumpreviewtile({super.key, this.imageUrl, this.imageData});
+  Forumpreviewtile({super.key, this.imageData});
 
   Future<Image> _loadImage() async {
     // If imageData is not null, create an Image from the binary data
@@ -17,6 +16,20 @@ class Forumpreviewtile extends StatelessWidget {
     // If imageData is null, load the default image
     return Image.asset('lib/assets/cat.png'); // Default image
   }
+
+  // an example of how to convert an image from the assets folder to a Uint8List
+  // Future<Image> _loadImage() async {
+  //   // If imageData is not null, create an Image from the binary data
+  //   if (imageData != null) {
+  //     return Image.memory(imageData!);
+  //   }
+
+  //   // If imageData is null, load the default image
+  //   ByteData byteData = await rootBundle.load('lib/assets/kitty6.jpg');
+  //   Uint8List uint8List = byteData.buffer.asUint8List();
+  //   return Image.memory(uint8List); // Default image
+  // }
+  
 
   @override
   Widget build(BuildContext context) {

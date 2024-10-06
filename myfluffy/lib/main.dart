@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myfluffy/screen/LandingScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:myfluffy/providers/catspost_provider.dart';
+import 'package:myfluffy/providers/userinfo_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => CatspostProvider()),
-        // ChangeNotifierProvider(create: (context) => UserInfoProvider()),
+        ChangeNotifierProvider(create: (context) => UserInfoProvider()),
       ],
       builder:(context, child) => MaterialApp(
         title: 'Flutter Demo',

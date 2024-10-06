@@ -81,7 +81,6 @@ class _ForumViewSectionState extends State<ForumViewSection> {
                 children: provider.posts.map((post) {
                   return Forumpreviewtile(
                     // Pass the image URL and binary data to Forumpreviewtile
-                    imageUrl: post.image, // Use this to fetch the image from network
                     imageData: post.image != null ? base64Decode(post.image!) : null, // Decode binary data if available
                   );
                 }).toList(),

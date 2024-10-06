@@ -35,6 +35,7 @@ dependencies:
   string_similarity: ^2.0.0
   provider:
   http:
+  geocoding:
 
 
   # The following adds the Cupertino Icons font to your application.
