@@ -1,0 +1,5 @@
+- implement posting 
+- fixing image upload error
+- convert image to base64
+- add google map in post for android
+- add google map in post for ios
