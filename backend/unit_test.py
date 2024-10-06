@@ -1,6 +1,9 @@
 import unittest
 from flask import Flask, jsonify
-from core_system import app, core_system
+from core_system import app, core_system, Session, Post
+from unittest.mock import patch, MagicMock
+import json
+
 
 class CoreSystemTestCase(unittest.TestCase):
     def setUp(self):
@@ -41,6 +44,40 @@ class CoreSystemTestCase(unittest.TestCase):
         response = self.app.get('/pay_bank_transfer')
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"Redirect to Bank Transfer", response.data)
+    
+    @patch('core_system.Session')
+    def test_post_postings(self, MockSession):
+        # Mock the database session and Post object
+        mock_session = MockSession.return_value
+        mock_post = MagicMock(spec=Post)
+        mock_session.add.return_value = None
+        mock_session.commit.return_value = None
+        mock_session.rollback.return_value = None
+        mock_session.close.return_value = None
+
+        # Define the test data
+        test_data = {
+            "owner_id": "existing_user_id",
+            "pet_name": "Parrot",
+            "description": "Lost Parrot",
+            "location": "POINT(100.0 0.0)",
+            "image": "base64_encoded_image_string",
+            "reward": "100"
+        }
+
+        # Simulate a POST request to the /PostPostings endpoint
+        response = self.app.post('/PostPostings', data=json.dumps(test_data), content_type='application/json')
+
+        # Check the response
+        self.assertEqual(response.status_code, 201)
+        response_data = json.loads(response.data)
+        self.assertEqual(response_data['owner_id'], test_data['owner_id'])
+        self.assertEqual(response_data['pet_name'], test_data['pet_name'])
+        self.assertEqual(response_data['description'], test_data['description'])
+        self.assertEqual(response_data['location'], test_data['location'])
+        self.assertEqual(response_data['reward'], test_data['reward'])
+        self.assertFalse(response_data['found'])
+
 
 class MockAdsPlugin:
     def fetch_ads(self):
