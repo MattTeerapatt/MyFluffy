@@ -144,58 +144,21 @@ def PostPostings():
         return core_system['posts'].AddPost(data)
     return jsonify({"error": "Post plugin not available"}), 400
 
-
-    # owner_id = data.get('owner_id'),
-    # pet_name = data.get('pet_name'),
-    # description = data.get('description'),
-    # location = data.get('location'),  # Expected format: 'POINT(longitude latitude)'
-    # image = data.get('image'),  # Expected to be base64 encoded
-    # reward = data.get('reward'),
-    # found = False
-
-    # session = Session()
-    
-    # try:
-    #     # Create a new Post object
-    #     new_post = Post(
-    #         owner_id=owner_id,
-    #         pet_name=pet_name,
-    #         description=description,
-    #         location=location,
-    #         image=image,
-    #         reward=reward,
-    #         found=found
-    #     )
-
-    #     # Add and commit the new post to the database
-    #     session.add(new_post)
-    #     session.commit()
-
-    #     new_post_dict = {
-    #         "owner_id": new_post.owner_id,
-    #         "pet_name": new_post.pet_name,
-    #         "description": new_post.description,
-    #         "location": new_post.location,
-    #         "image": new_post.image,
-    #         "reward": new_post.reward,
-    #         "found": new_post.found
-    #     }
-
-    #     return jsonify(new_post_dict), 201
-
-    # except Exception as e:
-    #     session.rollback()
-    #     return jsonify({"error": str(e)}), 400
-
-    # finally:
-    #     session.close()
-
 #get user by id
 @app.route('/FetchUserById/<string:id>', methods=['GET'])
 def FetchUserById(id):
-    if 'users' in core_system:
-        return core_system['users'].fetch_user_by_id(id)
-    return jsonify({"error": "User plugin not available"}), 400
+    user = app.Session.query(User).filter_by(user_id=id).first()
+    if user:
+        return jsonify({"status": "success", "user": {
+            'user_id': user.user_id,
+            'name' : user.name,
+            'password' : user.password,
+            'email' : user.email,
+            'phone' : user.phone_number,
+            'location' : user.location,
+            'Bankaccount' : user.Bankaccount,
+        }}), 200
+    return jsonify({"error": "User not found"}), 404
 
 if __name__ == '__main__':
     with app.app_context():
