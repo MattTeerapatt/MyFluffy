@@ -137,6 +137,54 @@ def FetchAllPost():
         return core_system['post'].FetchAllPost()
     return jsonify({"error": "Post plugin not available"}), 400
 
+@app.route('/PostPostings', methods=['POST'])
+def PostPostings():
+    data = request.get_json()
+    owner_id = data.get('owner_id')
+    pet_name = data.get('pet_name')
+    description = data.get('description')
+    location = data.get('location')  # Expected format: 'POINT(longitude latitude)'
+    image = data.get('image')  # Expected to be base64 encoded
+    reward = data.get('reward')
+    found = False
+    
+    session = Session()
+    
+    try:
+        # Create a new Post object
+        new_post = Post(
+            owner_id=owner_id,
+            pet_name=pet_name,
+            description=description,
+            location=location,
+            image=image,
+            reward=reward,
+            found=found
+        )
+
+        # Add and commit the new post to the database
+        session.add(new_post)
+        session.commit()
+
+        new_post_dict = {
+            "owner_id": new_post.owner_id,
+            "pet_name": new_post.pet_name,
+            "description": new_post.description,
+            "location": new_post.location,
+            "image": new_post.image,
+            "reward": new_post.reward,
+            "found": new_post.found
+        }
+
+        return jsonify(new_post_dict), 201
+
+    except Exception as e:
+        session.rollback()
+        return jsonify({"error": str(e)}), 400
+
+    finally:
+        session.close()
+
 if __name__ == '__main__':
     with app.app_context():
         load_plugins()

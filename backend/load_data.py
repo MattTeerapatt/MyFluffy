@@ -75,8 +75,8 @@ try:
     session.add_all([charity1, charity2])
 
     # Add mock users
-    user1 = User(name='John Doe', password='encrypted_pwd1', phone_number='123-456-7890', email='john@example.com', Bankaccount='123456789')
-    user2 = User(name='Jane Smith', password='encrypted_pwd2', phone_number='987-654-3210', email='jane@example.com', Bankaccount='987654321')
+    user1 = User(name='John Doe', password='encrypted_pwd1',location='100.0 0.0', phone_number='123-456-7890', email='john@example.com', Bankaccount='123456789')
+    user2 = User(name='Jane Smith', password='encrypted_pwd2', location='100.0 0.0',phone_number='987-654-3210', email='jane@example.com', Bankaccount='987654321')
     session.add_all([user1, user2])
     
     
