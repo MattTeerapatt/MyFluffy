@@ -4,15 +4,21 @@ import 'dart:io';
 
 import 'package:myfluffy/utility/TextInputField.dart';
 
-class PostPage extends StatefulWidget {
-  const PostPage({super.key});
+class MobilePostPage extends StatefulWidget {
+  const MobilePostPage({super.key});
 
   @override
   _PostPageState createState() => _PostPageState();
 }
 
-class _PostPageState extends State<PostPage> {
+class _PostPageState extends State<MobilePostPage> {
   File? _image;
+
+  // Controllers for the input fields
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _locationController = TextEditingController();
+  final TextEditingController _rewardController = TextEditingController();
 
   // Method to pick image from gallery or camera
   Future<void> _pickImage(ImageSource source) async {
@@ -27,14 +33,24 @@ class _PostPageState extends State<PostPage> {
   }
 
   @override
+  void dispose() {
+    // Dispose of the controllers when the widget is disposed
+    _nameController.dispose();
+    _descriptionController.dispose();
+    _locationController.dispose();
+    _rewardController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Post', style: TextStyle(color: Colors.white)),
-        backgroundColor: Color(0xFF7B3FF4),
+        backgroundColor: const Color(0xFF7B3FF4),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
           onPressed: () {
             Navigator.pop(context); // Handle back navigation
           },
@@ -53,9 +69,7 @@ class _PostPageState extends State<PostPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 5,
-              ),
+              const SizedBox(height: 5),
               const Text(
                 'Photo',
                 style: TextStyle(
@@ -98,25 +112,31 @@ class _PostPageState extends State<PostPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   children: [
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
                     TextInputField(
-                        label: 'Name', value: ' ', placeholder: 'Enter name'),
-                    SizedBox(height: 24),
+                      label: 'Name',
+                      placeholder: 'Enter name',
+                      controller: _nameController,
+                    ),
+                    const SizedBox(height: 24),
                     TextInputField(
-                        label: 'Description',
-                        value: ' ',
-                        placeholder: 'Enter description'),
-                    SizedBox(height: 24),
+                      label: 'Description',
+                      placeholder: 'Enter description',
+                      controller: _descriptionController,
+                    ),
+                    const SizedBox(height: 24),
                     TextInputField(
-                        label: 'Location',
-                        value: ' ',
-                        placeholder: 'Enter location'),
-                    SizedBox(height: 24),
+                      label: 'Location',
+                      placeholder: 'Enter location',
+                      controller: _locationController,
+                    ),
+                    const SizedBox(height: 24),
                     TextInputField(
-                        label: 'Reward',
-                        value: '',
-                        placeholder: 'Enter reward'),
-                    SizedBox(height: 24),
+                      label: 'Reward',
+                      placeholder: 'Enter reward',
+                      controller: _rewardController,
+                    ),
+                    const SizedBox(height: 24),
                   ],
                 ),
               ),
@@ -127,7 +147,7 @@ class _PostPageState extends State<PostPage> {
                       horizontal: 80,
                       vertical: 20,
                     ),
-                    backgroundColor: Colors.grey[400], // Post button color
+                    backgroundColor: Colors.grey[400],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ),

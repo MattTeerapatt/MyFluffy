@@ -64,7 +64,7 @@ class Post(Base):
     pet_name = Column(String, nullable=False)
     description = Column(Text)
     location = Column(String)
-    image = Column(BYTEA)  # Binary data for image
+    image = Column(String)  # 64base encoded string for image
     reward = Column(String)
     found = Column(Boolean)
 

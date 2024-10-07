@@ -31,6 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   image_picker: ^1.1.2
+  image_picker_for_web:
   google_nav_bar: ^5.0.6
   string_similarity: ^2.0.0
   provider:

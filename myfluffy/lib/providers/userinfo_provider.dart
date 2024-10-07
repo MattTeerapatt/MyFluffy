@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart'; // Import this to use kIsWeb
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:myfluffy/model/post.dart';
 import 'dart:convert';
 import 'package:myfluffy/model/user.dart';
 
@@ -15,13 +16,7 @@ class UserInfoProvider with ChangeNotifier {
   User? get currentUser => _currentUser;
   bool get isLoading => _isLoading;
 
-  // Fetch user data by ID
-  Future<void> fetchUserById(String id) async {
-    _isLoading = true;
-    notifyListeners();
-
-    // Determine the base URL depending on the platform
-    String _getBaseUrl() {
+  String _getBaseUrl() {
       if (kIsWeb) {
         return 'http://localhost:5000'; // Use localhost for web
       } else if (Platform.isAndroid) {
@@ -32,6 +27,13 @@ class UserInfoProvider with ChangeNotifier {
         return 'http://localhost:5000'; // Default to localhost for any other platform
       }
     }
+
+  // Fetch user data by ID
+  Future<void> fetchUserById(String id) async {
+    _isLoading = true;
+    notifyListeners();
+
+    // Determine the base URL depending on the platform
 
     final baseUrl = _getBaseUrl();
     final response = await http.get(Uri.parse('$baseUrl/FetchUserById/$id'));
@@ -62,6 +64,36 @@ class UserInfoProvider with ChangeNotifier {
 
     _isLoading = false;
     notifyListeners();
+  }
+
+  Future<void> postNewCatPost(Post post) async {
+      _isLoading = true;
+      notifyListeners();
+
+      final baseUrl = _getBaseUrl();
+      final response = await http.post(
+        Uri.parse('$baseUrl/PostPostings'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'description': post.description,
+          'found': post.found,
+          'image': post.image,
+          'location': post.location,
+          'owner_id': post.ownerId,
+          'pet_name': post.petName,
+          'reward': post.reward,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // If you want to refresh the posts after posting, you can add a method from CatspostProvider here
+        // For example, you could pass CatspostProvider instance and call fetchAllPosts()
+      } else {
+        throw Exception('Failed to post new cat post');
+      }
+
+      _isLoading = false;
+      notifyListeners();
   }
 
   // Set current user

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class TextInputField extends StatelessWidget {
   final String label;
-  final String value;
-  final String placeholder; // Add a placeholder property
+  final String placeholder; // Keep the placeholder property
+  final TextEditingController? controller; // Keep the controller property
 
   const TextInputField({
     Key? key,
     required this.label,
-    required this.value,
-    required this.placeholder, // Add a placeholder parameter
+    required this.placeholder, // Keep the placeholder parameter
+    this.controller, // Keep the controller parameter, make it optional
   }) : super(key: key);
 
   @override
@@ -32,12 +32,12 @@ class TextInputField extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           child: TextFormField(
-            initialValue: value,
+            controller: controller, // Use the controller
             decoration: InputDecoration(
               border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                borderSide: BorderSide(color: Colors.grey),
+              ),
               hintText: placeholder, // Add the placeholder text
             ),
           ),

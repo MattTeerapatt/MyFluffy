@@ -128,33 +128,4 @@ class CatspostProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // Post a new cat post
-  Future<void> postNewCatPost(Post post) async {
-    _isLoading = true;
-    notifyListeners();
-
-    final baseUrl = _getBaseUrl();
-    final response = await http.post(
-      Uri.parse('$baseUrl/PostPostings'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'description': post.description,
-        'found': post.found,
-        'image': post.image,
-        'location': post.location,
-        'owner_id': post.ownerId,
-        'pet_name': post.petName,
-        'reward': post.reward,
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      await fetchAllPosts(); // Refresh the list of posts
-    } else {
-      throw Exception('Failed to post new cat post');
-    }
-
-    _isLoading = false;
-    notifyListeners();
-  }
 }
