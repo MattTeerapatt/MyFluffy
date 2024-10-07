@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart'; // Import this for kIsWeb
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -11,12 +14,26 @@ class CatspostProvider with ChangeNotifier {
   List<Post> get posts => _filteredPosts.isEmpty ? _posts : _filteredPosts;
   bool get isLoading => _isLoading;
 
+  // Base URL switching based on platform
+  String _getBaseUrl() {
+    if (kIsWeb) {
+      return 'http://localhost:5000'; // Use localhost for web
+    } else if (Platform.isAndroid) {
+      return 'http://10.0.2.2:5000'; // Use 10.0.2.2 for Android emulator
+    } else if (Platform.isIOS) {
+      return 'http://127.0.0.1:5000'; // Use 127.0.0.1 for iOS simulator
+    } else {
+      return 'http://localhost:5000'; // Default to localhost for any other platform
+    }
+  }
+
   // Fetch all posts
   Future<void> fetchAllPosts() async {
     _isLoading = true;
     notifyListeners();
 
-    final response = await http.get(Uri.parse('http://localhost:5000/FetchAllPost'));
+    final baseUrl = _getBaseUrl();
+    final response = await http.get(Uri.parse('$baseUrl/FetchAllPost'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
@@ -58,7 +75,8 @@ class CatspostProvider with ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    final response = await http.get(Uri.parse('http://localhost:5000/FetchPostByLocation?location=$location'));
+    final baseUrl = _getBaseUrl();
+    final response = await http.get(Uri.parse('$baseUrl/FetchPostByLocation?location=$location'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
@@ -115,8 +133,9 @@ class CatspostProvider with ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
+    final baseUrl = _getBaseUrl();
     final response = await http.post(
-      Uri.parse('http://localhost:5000/PostPostings'),
+      Uri.parse('$baseUrl/PostPostings'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         'description': post.description,

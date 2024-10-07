@@ -1,8 +1,10 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart'; // Import this to use kIsWeb
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:myfluffy/model/user.dart';
-
 
 class UserInfoProvider with ChangeNotifier {
   User? _user;
@@ -18,7 +20,21 @@ class UserInfoProvider with ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    final response = await http.get(Uri.parse('http://localhost:5000/FetchUserById/$id'));
+    // Determine the base URL depending on the platform
+    String _getBaseUrl() {
+      if (kIsWeb) {
+        return 'http://localhost:5000'; // Use localhost for web
+      } else if (Platform.isAndroid) {
+        return 'http://10.0.2.2:5000'; // Use 10.0.2.2 for Android emulator
+      } else if (Platform.isIOS) {
+        return 'http://127.0.0.1:5000'; // Use 127.0.0.1 for iOS simulator
+      } else {
+        return 'http://localhost:5000'; // Default to localhost for any other platform
+      }
+    }
+    final baseUrl = _getBaseUrl();
+
+    final response = await http.get(Uri.parse('$baseUrl/FetchUserById/$id'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
@@ -48,7 +64,7 @@ class UserInfoProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // set current user
+  // Set current user
   void setCurrentUser(User user) {
     _currentUser = user;
     notifyListeners();

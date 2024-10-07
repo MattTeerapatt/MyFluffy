@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myfluffy/providers/catspost_provider.dart';
 import 'package:myfluffy/screen/ToggleScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:myfluffy/providers/userinfo_provider.dart'; // Import your provider
@@ -20,10 +21,16 @@ class _LandingScreenState extends State<LandingScreen> {
 
   Future<void> _fetchCurrentUser() async {
     final userInfoProvider = Provider.of<UserInfoProvider>(context, listen: false);
-    
+    final catspostProvider = Provider.of<CatspostProvider>(context, listen: false);
+
     try {
+      // Fetch all the posts
+      await catspostProvider.fetchAllPosts();
+      // get the first post
+      final post = catspostProvider.posts.first;
+      print('First post: ${post.postId}, ${post.ownerId}');
       // Fetch user data by ID
-      await userInfoProvider.fetchUserById('f177a166-732d-4b2a-bdb5-1213e2c8ccaa');
+      await userInfoProvider.fetchUserById(post.ownerId);
       // Set the fetched user as the current user
       userInfoProvider.setCurrentUser(userInfoProvider.user!);
 
