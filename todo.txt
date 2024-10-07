@@ -1,2 +1,2 @@
-- add google map in post for android
-- add google map in post for ios
+- add google map in profile for android
+- add google map in profile for ios
