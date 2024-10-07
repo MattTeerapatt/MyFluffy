@@ -6,11 +6,11 @@ class TextInputField extends StatelessWidget {
   final String placeholder; // Add a placeholder property
 
   const TextInputField({
-    super.key,
+    Key? key,
     required this.label,
     required this.value,
     required this.placeholder, // Add a placeholder parameter
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

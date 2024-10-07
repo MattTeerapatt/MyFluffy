@@ -7,7 +7,7 @@ import 'package:myfluffy/zone/SukhumvitPage3.dart';
 class LocationButton extends StatelessWidget {
   final String label;
 
-  const LocationButton({super.key, required this.label});
+  const LocationButton({Key? key, required this.label}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

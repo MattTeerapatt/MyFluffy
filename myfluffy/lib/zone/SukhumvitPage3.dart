@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SukhumvitPage3 extends StatelessWidget {
-  const SukhumvitPage3({super.key});
+  const SukhumvitPage3({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

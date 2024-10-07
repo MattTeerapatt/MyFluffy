@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Forumpreviewtile extends StatelessWidget {
   final Image image;  // Image object to display
 
-  const Forumpreviewtile({super.key, required this.image});
+  Forumpreviewtile({super.key, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class Forumpreviewtile extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(16.0), // Rounded corners
-            child: SizedBox(
+            child: Container(
               width: 150,  // Adjust the width of the tile
               height: 142, // Adjust the height of the tile
               child: image, // Display the image

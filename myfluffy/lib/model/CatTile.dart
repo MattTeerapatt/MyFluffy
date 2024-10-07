@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CatTile extends StatelessWidget {
   final String catName;
 
-  const CatTile({super.key, required this.catName});
+  const CatTile({Key? key, required this.catName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

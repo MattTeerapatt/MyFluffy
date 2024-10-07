@@ -9,12 +9,13 @@ class Reel extends StatefulWidget {
   final reward;
 
   const Reel(
-      {super.key,
+      {Key? key,
       this.name,
       this.description,
       this.location,
       this.image,
-      this.reward});
+      this.reward})
+      : super(key: key);
 
   @override
   State<Reel> createState() => _ReelState();
@@ -97,7 +98,7 @@ class _ReelState extends State<Reel> {
                         ],
                       ),
                       Spacer(),
-                      SizedBox(
+                      Container(
                         height: 61,
                         child: VerticalDivider(
                           color: Color(0xffB2B2B2),
@@ -154,7 +155,7 @@ class _ReelState extends State<Reel> {
           Positioned(
             left: 24,
             bottom: _isTapped ? 120 : 24,
-            child: SizedBox(
+            child: Container(
               width: 283,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -224,7 +225,7 @@ class _ReelState extends State<Reel> {
                             _isTapped = !_isTapped;
                           });
                         },
-                        child: SizedBox(
+                        child: Container(
                           height: 30,
                           child: Text(
                             '${widget.description}',

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:myfluffy/model/CharityTile.dart';
 
 class CharitySection extends StatefulWidget {
-  const CharitySection({super.key});
+  const CharitySection({Key? key}) : super(key: key);
 
   @override
   _CharitySectionState createState() => _CharitySectionState();

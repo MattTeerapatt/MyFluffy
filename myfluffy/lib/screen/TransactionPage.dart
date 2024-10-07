@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myfluffy/global/balance.dart';
-import 'package:myfluffy/screen/Fullscreenimage.dart';
 
 class TransactionPage extends StatelessWidget {
-  const TransactionPage({super.key});
+  TransactionPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -185,12 +184,7 @@ class TransactionPage extends StatelessWidget {
 
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => FullScreenImage(imagePath: 'lib/assets/truemoney.jpg'),
-                          ),
-                        );
+                        // Handle Withdraw action
                       },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 15),
@@ -224,12 +218,7 @@ class TransactionPage extends StatelessWidget {
 
                     child: ElevatedButton(
                       onPressed: () {
-                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => FullScreenImage(imagePath: 'lib/assets/bank.jpg'),
-                          ),
-                        );
+                        // Handle Withdraw action
                       },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 15),

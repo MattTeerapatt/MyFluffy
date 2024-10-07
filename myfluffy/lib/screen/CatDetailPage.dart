@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CatDetailPage extends StatelessWidget {
   final String catName;
 
-  const CatDetailPage({super.key, required this.catName});
+  const CatDetailPage({Key? key, required this.catName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +102,7 @@ class CatDetailPage extends StatelessWidget {
                   },
                 );
               },
+              child: const Text('Contact Owner'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,
                 padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
@@ -109,7 +110,6 @@ class CatDetailPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
-              child: const Text('Contact Owner'),
             ),
           ],
         ),

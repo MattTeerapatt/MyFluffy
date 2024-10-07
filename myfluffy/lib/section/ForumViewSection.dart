@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:myfluffy/model/ForumPreviewTile.dart';
 
 class ForumViewSection extends StatefulWidget {
-  const ForumViewSection({super.key});
+  const ForumViewSection({Key? key}) : super(key: key);
 
   @override
   _ForumViewSectionState createState() => _ForumViewSectionState();

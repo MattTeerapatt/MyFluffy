@@ -10,7 +10,7 @@ class ReelPage extends StatefulWidget {
 class _ReelPageState extends State<ReelPage> {
   @override
   Widget build(BuildContext context) {
-    PageController pageController = PageController(initialPage: 0);
+    PageController _pageController = PageController(initialPage: 0);
 
     List<Widget> reel = [
       Reel(
@@ -64,7 +64,7 @@ class _ReelPageState extends State<ReelPage> {
       body: Container(
         child: PageView(
           scrollDirection: Axis.vertical,
-          controller: pageController,
+          controller: _pageController,
           children: reel,
         )
       ),

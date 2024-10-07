@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myfluffy/global/balance.dart';
 import 'package:myfluffy/screen/ReelPage.dart';
 import 'package:myfluffy/screen/HomeScreen.dart';
 import 'package:myfluffy/screen/TransactionPage.dart';
