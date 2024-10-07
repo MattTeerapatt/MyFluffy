@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Charitytile extends StatelessWidget {
   final String imagePath;
 
-  Charitytile({Key? key, required this.imagePath}) : super(key: key);
+  const Charitytile({super.key, required this.imagePath});
 
   @override
   Widget build(BuildContext context) {

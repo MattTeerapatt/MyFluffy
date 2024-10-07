@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AdsTile extends StatelessWidget {
   final String imagePath;
 
-  AdsTile({Key? key, required this.imagePath}) : super(key: key);
+  const AdsTile({super.key, required this.imagePath});
 
   @override
   Widget build(BuildContext context) {

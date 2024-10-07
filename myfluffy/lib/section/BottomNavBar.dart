@@ -4,7 +4,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 class MyBottomNavBar extends StatelessWidget {
   final ValueChanged<int>
       onTabChange; // Define the named parameter 'onTabChange'
-  const MyBottomNavBar({Key? key, required this.onTabChange}) : super(key: key);
+  const MyBottomNavBar({super.key, required this.onTabChange});
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +38,8 @@ class MyBottomNavBar extends StatelessWidget {
             text: 'Reel',
           ),
           GButton(
-            icon: Icons.settings,
-            text: 'Setting',
+            icon: Icons.payment_outlined,
+            text: 'Payment',
           ),
         ],
       ),

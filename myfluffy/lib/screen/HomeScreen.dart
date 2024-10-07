@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myfluffy/screen/FindPage.dart';
-import 'package:myfluffy/section/AboutUsSection.dart';
 import 'package:myfluffy/section/AdsSection.dart';
 import 'package:myfluffy/section/CharitySection.dart';
 import 'package:myfluffy/section/ForumViewSection.dart';

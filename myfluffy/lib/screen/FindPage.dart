@@ -3,7 +3,7 @@ import 'package:myfluffy/model/CatTile.dart';
 import 'package:myfluffy/screen/CatDetailPage.dart';
 
 class FindPage extends StatefulWidget {
-  const FindPage({Key? key}) : super(key: key);
+  const FindPage({super.key});
 
   @override
   _FindPageState createState() => _FindPageState();
@@ -51,7 +51,9 @@ class _FindPageState extends State<FindPage> {
       } else {
         // Sort alphabetically by name
         List<String> allCats = [];
-        zoneCats.values.forEach((cats) => allCats.addAll(cats));
+        for (var cats in zoneCats.values) {
+          allCats.addAll(cats);
+        }
         allCats.sort((a, b) => a.compareTo(b));
         filteredZoneCats = {'All Cats': allCats};
       }

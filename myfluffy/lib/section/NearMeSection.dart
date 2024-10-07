@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myfluffy/utility/LocationButton.dart';
 
 class NearMeSection extends StatelessWidget {
-  const NearMeSection({Key? key}) : super(key: key);
+  const NearMeSection({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myfluffy/global/balance.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({super.key});
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
