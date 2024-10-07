@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-
+import 'dart:typed_data'; // Import Uint8List
+import 'package:provider/provider.dart';
+import 'dart:convert';
 import 'package:myfluffy/utility/TextInputField.dart';
+import 'package:myfluffy/model/post.dart';
+import 'package:myfluffy/providers/userinfo_provider.dart';
 
 class MobilePostPage extends StatefulWidget {
   const MobilePostPage({super.key});
 
   @override
-  _PostPageState createState() => _PostPageState();
+  _MobilePostPageState createState() => _MobilePostPageState();
 }
 
-class _PostPageState extends State<MobilePostPage> {
-  File? _image;
+class _MobilePostPageState extends State<MobilePostPage> {
+  Uint8List? _imageData; // Store image data
 
   // Controllers for the input fields
   final TextEditingController _nameController = TextEditingController();
@@ -26,15 +29,15 @@ class _PostPageState extends State<MobilePostPage> {
     final XFile? pickedImage = await picker.pickImage(source: source);
 
     if (pickedImage != null) {
+      final bytes = await pickedImage.readAsBytes();
       setState(() {
-        _image = File(pickedImage.path);
+        _imageData = bytes;
       });
     }
   }
 
   @override
   void dispose() {
-    // Dispose of the controllers when the widget is disposed
     _nameController.dispose();
     _descriptionController.dispose();
     _locationController.dispose();
@@ -42,8 +45,43 @@ class _PostPageState extends State<MobilePostPage> {
     super.dispose();
   }
 
+  Future<void> _submitPost(UserInfoProvider userInfoProvider) async {
+    // Create a new Post object using the input field values and image data
+    final post = Post(
+      postId: "This value arn't used",
+      petName: _nameController.text,
+      description: _descriptionController.text,
+      location: _locationController.text,
+      reward: _rewardController.text,
+      image: _imageData != null ? base64Encode(_imageData!) : '',
+      ownerId: userInfoProvider.currentUser!.userId, // Ensure userInfoProvider holds current user info
+      found: false, // Assuming 'found' is initially false
+    );
+
+    try {
+      await userInfoProvider.postNewCatPost(post);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Post created successfully')),
+      );
+      // Clear form after successful submission
+      _nameController.clear();
+      _descriptionController.clear();
+      _locationController.clear();
+      _rewardController.clear();
+      setState(() {
+        _imageData = null;
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to create post')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final userInfoProvider = Provider.of<UserInfoProvider>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -52,16 +90,9 @@ class _PostPageState extends State<MobilePostPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
           onPressed: () {
-            Navigator.pop(context); // Handle back navigation
+            Navigator.pop(context);
           },
         ),
-        foregroundColor: Colors.black,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -78,8 +109,6 @@ class _PostPageState extends State<MobilePostPage> {
                 ),
               ),
               const SizedBox(height: 10),
-
-              // GestureDetector to pick image from gallery or camera
               Center(
                 child: GestureDetector(
                   onTap: () => _showImagePickerDialog(context),
@@ -90,7 +119,7 @@ class _PostPageState extends State<MobilePostPage> {
                       color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    child: _image == null
+                    child: _imageData == null
                         ? const Icon(
                             Icons.image,
                             size: 100,
@@ -98,8 +127,8 @@ class _PostPageState extends State<MobilePostPage> {
                           )
                         : ClipRRect(
                             borderRadius: BorderRadius.circular(15),
-                            child: Image.file(
-                              _image!,
+                            child: Image.memory(
+                              _imageData!,
                               fit: BoxFit.cover,
                               width: double.infinity,
                               height: 150,
@@ -152,9 +181,7 @@ class _PostPageState extends State<MobilePostPage> {
                       borderRadius: BorderRadius.circular(30.0),
                     ),
                   ),
-                  onPressed: () {
-                    // Handle post button action
-                  },
+                  onPressed: () => _submitPost(userInfoProvider),
                   child: const Text(
                     'Post',
                     style: TextStyle(
