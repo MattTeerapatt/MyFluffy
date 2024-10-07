@@ -32,8 +32,8 @@ class UserInfoProvider with ChangeNotifier {
         return 'http://localhost:5000'; // Default to localhost for any other platform
       }
     }
-    final baseUrl = _getBaseUrl();
 
+    final baseUrl = _getBaseUrl();
     final response = await http.get(Uri.parse('$baseUrl/FetchUserById/$id'));
 
     if (response.statusCode == 200) {
