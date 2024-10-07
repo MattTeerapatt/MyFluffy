@@ -13,8 +13,10 @@ from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 from sqlalchemy.dialects.postgresql import BYTEA
 import os
 import importlib.util
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 DATABASE_URI = 'postgresql+psycopg2://postgres:password@localhost:5432/postgres'
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -62,7 +64,7 @@ class Post(Base):
     pet_name = Column(String, nullable=False)
     description = Column(Text)
     location = Column(String)
-    image = Column(BYTEA)  # Binary data for image
+    image = Column(String)  # 64base encoded string for image
     reward = Column(String)
     found = Column(Boolean)
 

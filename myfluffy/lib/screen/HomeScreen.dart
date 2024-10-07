@@ -1,11 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:myfluffy/screen/FindPage.dart';
+import 'package:myfluffy/screen/WebPostPage.dart';
 import 'package:myfluffy/section/AboutUsSection.dart';
 import 'package:myfluffy/section/AdsSection.dart';
 import 'package:myfluffy/section/CharitySection.dart';
 import 'package:myfluffy/section/ForumViewSection.dart';
 import 'package:myfluffy/section/NearMeSection.dart';
-import 'package:myfluffy/screen/PostPage.dart';
+import 'package:myfluffy/screen/MobilePostPage.dart';
 import 'package:myfluffy/screen/ProfilePage.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -76,7 +78,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const PostPage()),
+                    MaterialPageRoute(
+                      builder: (context) => kIsWeb ? const WebPostPage() : const MobilePostPage(),
+                    ),
                   );
                 },
               ),

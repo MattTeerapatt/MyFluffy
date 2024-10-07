@@ -1,0 +1,2 @@
+- add google map in profile for android
+- add google map in profile for ios
