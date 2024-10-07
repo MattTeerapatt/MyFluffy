@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myfluffy/global/balance.dart';
+import 'package:myfluffy/screen/map_screen.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -68,11 +69,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   trailing: IconButton(
                     icon: const Icon(Icons.edit),
                     onPressed: () {
-                      _editInfo(context, 'Location', location, (value) {
-                        setState(() {
-                          location = value;
-                        });
-                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MapScreen(),
+                        ),
+                      );
                     },
                   ),
                 ),
