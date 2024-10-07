@@ -60,7 +60,7 @@ class CatspostProvider with ChangeNotifier {
 
       print('Fetched Posts:');
       for (var post in _posts) {
-        print('Post ID: ${post.postId}, Image: ${post.image}');
+        print('Post ID: ${post.postId}');
       }
     } else {
       throw Exception('Failed to load posts');

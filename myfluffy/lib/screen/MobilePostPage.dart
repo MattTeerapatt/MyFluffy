@@ -46,24 +46,34 @@ class _MobilePostPageState extends State<MobilePostPage> {
   }
 
   Future<void> _submitPost(UserInfoProvider userInfoProvider) async {
-    // Create a new Post object using the input field values and image data
+    // Get values from the input controllers
+    String petName = _nameController.text;
+    String description = _descriptionController.text;
+    String location = _locationController.text;
+    String reward = _rewardController.text.isNotEmpty
+        ? _rewardController.text
+        : 'No specified reward';
+    bool found = false; // Assuming 'found' is initially false
+
+    // Create a new Post object
     final post = Post(
-      postId: "This value arn't used",
-      petName: _nameController.text,
-      description: _descriptionController.text,
-      location: _locationController.text,
-      reward: _rewardController.text,
-      image: _imageData != null ? base64Encode(_imageData!) : '',
-      ownerId: userInfoProvider.currentUser!.userId, // Ensure userInfoProvider holds current user info
-      found: false, // Assuming 'found' is initially false
+      postId: "No Need to Set this", // The server will handle this
+      petName: petName,
+      description: description,
+      location: location,
+      reward: reward,
+      found: found,
+      image: _imageData != null ? base64Encode(_imageData!) : null,
+      ownerId: userInfoProvider.currentUser?.userId ?? '', // Fetch owner ID from current user
     );
 
     try {
+      print('Attempting to post new cat post...');
       await userInfoProvider.postNewCatPost(post);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Post created successfully')),
+        const SnackBar(content: Text('Post created successfully!')),
       );
-      // Clear form after successful submission
+      // Clear the form and image after posting
       _nameController.clear();
       _descriptionController.clear();
       _locationController.clear();
@@ -71,16 +81,17 @@ class _MobilePostPageState extends State<MobilePostPage> {
       setState(() {
         _imageData = null;
       });
+      Navigator.pop(context); // Navigate back after successful post
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to create post')),
+        SnackBar(content: Text('Error posting new cat post: $e')),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final userInfoProvider = Provider.of<UserInfoProvider>(context);
+    final userInfoProvider = Provider.of<UserInfoProvider>(context, listen: false);
 
     return Scaffold(
       backgroundColor: Colors.white,

@@ -165,12 +165,6 @@ class _WebPostPageState extends State<WebPostPage> {
                     String location = _locationController.text;
                     String reward = _rewardController.text !='' ? _rewardController.text : 'No specified reward';
                     bool found = false; // Set this based on your logic
-                    if (_imageData!=null){
-                      String s_image = base64Encode(_imageData!);
-                      print(s_image);
-                      //print the type of s_image
-                      print(s_image.runtimeType);
-                    }
                     
                     // Create the Post object
                     Post newPost = Post(
